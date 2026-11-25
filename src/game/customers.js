@@ -14,7 +14,7 @@ import { t } from '../core/i18n.js';
 import { icon, SERVICE_ICON } from '../ui/icons.js';
 
 const PATIENCE = 90;
-const AUTO_COLLECT = 25;
+const AUTO_COLLECT = Infinity;
 const STREET_TIME_MULT = 2;
 
 export class CustomerManager {
@@ -209,7 +209,7 @@ export class CustomerManager {
 
   pickMechanic(job, station) {
     const S = this.scene;
-    const idx = Number(job?.mechanicIndex);
+    const idx = job?.mechanicIndex;
     if (job?.mechanicIsPlayer) {
       const player = S.mechanics.find((m) => m.isPlayer && !m.busy);
       if (player) return player;
@@ -410,31 +410,19 @@ export class CustomerManager {
 
   startService(c) {
     const st = this.state;
-    const mechanic = S(this).assignMechanic(c.station);
-    if (!mechanic) {
-      audio.error();
-      S(this).ui?.toast(t('noMechanic'), 'warn');
-      return;
+    if (!c.job) {
+      const result = st.startCustomerJob(c.svc.id, { stationUid: c.station.uid, cfg: c.cfg });
+      if (!result.ok) {
+        audio.error();
+        const msg = result.error === 'fuel' ? t('notEnoughFuel') : result.error === 'stationBusy' ? t('stationBusy') : t('socialError');
+        S(this).ui?.toast(msg, 'warn');
+        if (result.error === 'fuel') S(this).ui?.flashFuel?.();
+        return;
+      }
+      c.job = result.job;
     }
-    if (!st.useFuel(c.svc.fuel)) {
-      audio.error();
-      S(this).releaseMechanic(mechanic);
-      S(this).ui?.toast(t('notEnoughFuel'), 'warn');
-      S(this).ui?.flashFuel?.();
-      return;
-    }
-    audio.click();
-    if (c.svc.id === 'wash' || c.svc.id === 'wax') audio.whoosh();
-    else audio.wrench();
-    c.phase = 'working';
-    c.timer = 0;
-    c.label?.remove();
-    const ringText = el('span', {}, `${c.svc.time}s`);
-    const ring = el('div', { class: 'progress-ring' }, el('div', { class: 'ring-inner' }, el('span', { class: 'ring-icon', html: icon(SERVICE_ICON[c.svc.id] || 'wrench') }), ringText));
-    c.ring = ring;
-    c.ringText = ringText;
-    c.label = S(this).labels.add(ring, c.obj, { offsetY: c.obj.userData.car.height + 1.3 });
-    c.mechanic = mechanic;
+    this.startJobService(c);
+    st.saveNow();
   }
 
   collect(c) {

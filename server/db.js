@@ -1287,6 +1287,9 @@ function publicGarage(state) {
     z: Number(it.z) || 0,
     rot: Number(it.rot) || 0,
     wall: it.wall === 'x' || it.wall === 'z' ? it.wall : undefined,
+    ...(it.surfaceUid != null ? { surfaceUid: String(it.surfaceUid) } : {}),
+    ...(Number.isInteger(it.slot) ? { slot: it.slot } : {}),
+    ...(Number.isInteger(it.layer) ? { layer: it.layer } : {}),
   })).filter((it) => it.type);
   const turntableUids = new Set(items.filter((it) => it.type === 'turntable').map((it) => it.uid));
   const mounted = new Set();

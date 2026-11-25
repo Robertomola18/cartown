@@ -474,7 +474,7 @@ export class App {
   }
 
   localFriendHost(friend) {
-    if (friend.garage?.cars?.length) return friend;
+    if (friend.garage?.cars?.length || friend.garage?.items?.length) return friend;
     return {
       ...friend,
       garage: {
@@ -517,7 +517,8 @@ export class App {
   onFriendClick(friend, e) {
     audio.click();
     const serverId = Number(friend.serverUserId) || (Number.isInteger(Number(friend.id)) && Number(friend.id) > 0 ? Number(friend.id) : null);
-    const canVisit = Boolean(serverId || this.localFriendHost(friend).garage.cars.length);
+    const botId = friend.botId || (typeof friend.id === 'string' && friend.id.startsWith('bot-') ? friend.id.slice(4) : null);
+    const canVisit = Boolean(serverId || botId || this.localFriendHost(friend).garage.cars.length);
     popupMenu(e.clientX, e.clientY, `${friend.name} · ${t('level')} ${friend.level}`, [
       { label: `${t('challenge')} (${MODELS[friend.car?.model || 'hatch'].name})`, icon: 'flag', action: () => this.openRaceMenu({ friend, tab: 'friends' }) },
       canVisit ? { label: t('visit'), icon: 'home', action: async () => {
@@ -527,6 +528,14 @@ export class App {
             return;
           } catch (error) {
             console.warn('visit', error);
+          }
+        }
+        if (botId) {
+          try {
+            this.visitGarage((await socialApi.visitBot(botId)).host);
+            return;
+          } catch (error) {
+            console.warn('visitBot', error);
           }
         }
         const local = this.localFriendHost(friend);
