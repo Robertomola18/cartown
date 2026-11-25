@@ -5,7 +5,7 @@
 
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
-import { posterTexture, signTexture, billboardTexture, radialTexture, rugTexture } from './textures.js';
+import { posterTexture, signTexture, billboardTexture, radialTexture, rugTexture, tileTexture } from './textures.js';
 import { ITEMS } from '../game/catalog.js';
 
 const matCache = new Map();
@@ -764,6 +764,16 @@ function coffeeMachine() {
   return g;
 }
 
+function tile(type) {
+  const g = new THREE.Group();
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), mat('#ffffff', { rough: 0.8, map: tileTexture(type), side: THREE.DoubleSide }));
+  m.rotation.x = -Math.PI / 2;
+  m.position.y = 0.012;
+  m.receiveShadow = true;
+  g.add(m);
+  return g;
+}
+
 function rug(type) {
   const def = ITEMS[type];
   const g = new THREE.Group();
@@ -779,7 +789,7 @@ function velvetRope() {
   const rope = mat('#a4122c', { rough: 0.95 });
   for (const x of [-1.25, 1.25]) {
     cylinder(g, 0.16, 0.2, 0.06, base, x, 0.03, 0, 14);
-    cylinder(g, 0.055, 0.055, 0.82, metal, x, 0.44, 0, 12);
+    cylinder(g, 0.055, 0.055, 0.82, metal, x, 0.03, 0, 12);
     sphere(g, 0.09, metal, x, 0.86, 0, 12);
   }
   const curve = new THREE.CatmullRomCurve3([
@@ -813,6 +823,12 @@ const BUILDERS = {
   hydraulicJack, drill, welder, obdScanner, jumpCables, oilCan, boxShelf, pegboard, metalLocker, cratePallet,
   ledBar, tripodLight, amberBeacon, chalkboard, fireExtinguisher, firstAid, wallPlaque, filingCabinet, miniFridge,
   coffeeMachine,
+  tileWoodLight: (g) => tile('tileWoodLight'),
+  tileWoodDark: (g) => tile('tileWoodDark'),
+  tileStone: (g) => tile('tileStone'),
+  tileConcrete: (g) => tile('tileConcrete'),
+  tileMarble: (g) => tile('tileMarble'),
+  tileChecker: (g) => tile('tileChecker'),
   rugRed: (g) => rug('rugRed'),
   rugBlue: (g) => rug('rugBlue'),
   rugChecker: (g) => rug('rugChecker'),

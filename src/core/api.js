@@ -20,7 +20,15 @@ export function wsUrl() {
 }
 
 export function redirectLogin() {
-  const next = location.pathname + location.search;
+  let next = location.pathname + location.search;
+  try {
+    const scene = sessionStorage.getItem('cartown:pendingScene');
+    if (scene === 'race' || scene === 'town') {
+      const url = new URL(next, location.origin);
+      url.searchParams.set('goto', scene);
+      next = url.pathname + url.search;
+    }
+  } catch {}
   location.href = `${apiUrl('/login')}?next=${encodeURIComponent(next)}`;
 }
 

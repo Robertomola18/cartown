@@ -6,11 +6,12 @@
 
 import { FEATURED_V2 } from './featured.js';
 import { FEATURED_V2_MORE } from './featured2.js';
+import { FEATURED_V3 } from './featured3.js';
 import { GENERIC_V2 } from './generic.js';
 
 export const MODELS = {};
 
-for (const spec of [...FEATURED_V2, ...FEATURED_V2_MORE, ...GENERIC_V2]) {
+for (const spec of [...FEATURED_V2, ...FEATURED_V2_MORE, ...FEATURED_V3, ...GENERIC_V2]) {
   const b = spec.body;
   MODELS[spec.id] = {
     ...spec,

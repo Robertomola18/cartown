@@ -117,7 +117,7 @@ database lives in tmpfs. To copy snapshots off-host, mount a directory at
 | **My Garage** | Isometric garage with posters, red service lifts, a corner billboard, a crossroads with traffic and friends' cars parked outside. |
 | **Customers** | NPC cars arrive, park and request oil, tires, brakes, tuning, washing, waxing or repainting. Each service uses fuel and pays coins, XP and Luxury Point tips. |
 | **Jobs** | Two real-time customer errands and one workshop slot that installs the next upgrade at a discount. |
-| **Buy Cars** | Showroom with 19 vehicles, stats and a colour choice before purchase. |
+| **Buy Cars** | Showroom with 21 vehicles, stats and a colour choice before purchase. |
 | **Paint & Tune** | Finishes, two-tone roof, 13 rim designs, liveries, spoilers, tint, stance, underglow and mechanical upgrades. |
 | **Edit Garage** | Buy, place, move, rotate and sell lifts, wash bays, paint booths, arcade machines, jukeboxes, tables and more. Includes floor/wall themes and lot expansions. |
 | **Drag races** | Staged start, revving, shifting in the green zone and nitro. Race AI, NPC friends, online players or a second player on the same keyboard. |
@@ -137,8 +137,8 @@ database lives in tmpfs. To copy snapshots off-host, mount a directory at
 ## How cars are modelled
 
 Cars are generated in code under `src/cars/`; there are no external mesh files.
-`bodyV2.js` lofts a smooth body from curves measured in metres. `featured.js`
-and `featured2.js` contain the six cars recreated from reference photos.
+`bodyV2.js` lofts a smooth body from curves measured in metres. `featured.js`,
+`featured2.js` and `featured3.js` contain the eight featured cars.
 `archetypes.js` and `generic.js` generate the rest of the line-up. Windows,
 lights, grilles, plates and liveries are drawn on canvases and projected onto
 the body. Each car has a detailed model for the showroom and races, plus a

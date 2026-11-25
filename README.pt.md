@@ -98,7 +98,7 @@ Quando o proxy cuidar de HTTPS, ative `CARTON_TRUST_PROXY=1` e `CARTON_COOKIE_SE
 | **Minha garagem** | Garagem isométrica com pôsteres, elevadores vermelhos, letreiro, cruzamento com tráfego e carros de amigos estacionados do lado de fora. |
 | **Clientes** | Carros NPC chegam, estacionam e pedem óleo, pneus, freios, ajuste, lavagem, cera ou repintura. Cada serviço consome combustível e rende moedas, experiência e gorjetas. |
 | **Trabalhos** | Até duas tarefas em tempo real e uma vaga na oficina para instalar a próxima melhoria com desconto. |
-| **Comprar carros** | Concessionária com 19 veículos, estatísticas e escolha de cor antes da compra. |
+| **Comprar carros** | Concessionária com 21 veículos, estatísticas e escolha de cor antes da compra. |
 | **Pintura e tuning** | Acabamentos, teto bicolor, 13 desenhos de rodas, adesivos, spoilers, película, suspensão, luzes e melhorias mecânicas. |
 | **Editar garagem** | Compre, coloque, mova, gire e venda elevadores, lava-jato, cabine de pintura, fliperama, jukebox, mesas e muito mais. Inclui temas de piso e parede e ampliação do terreno. |
 | **Corridas** | Largada com semáforo, acelerar, trocar de marcha na zona verde e nitro. Corridas de quarto de milha contra IA, amigos NPC, adversários online ou um segundo jogador no mesmo teclado. |
@@ -117,7 +117,7 @@ Quando o proxy cuidar de HTTPS, ative `CARTON_TRUST_PROXY=1` e `CARTON_COOKIE_SE
 
 ## Como os carros são modelados
 
-Os carros são gerados por código em `src/cars/`; não há arquivos de malha externos. `bodyV2.js` cria uma carroceria lisa a partir de curvas medidas em metros. `featured.js` e `featured2.js` contêm os seis carros recriados das fotos de referência. `archetypes.js` e `generic.js` geram o restante dos modelos. Janelas, faróis, grades, placas e adesivos são desenhados em telas e projetados na carroceria. Cada carro tem um modelo detalhado para vitrine e corridas, além de um modelo mais leve para garagem, tráfego e cidade.
+Os carros são gerados por código em `src/cars/`; não há arquivos de malha externos. `bodyV2.js` cria uma carroceria lisa a partir de curvas medidas em metros. `featured.js`, `featured2.js` e `featured3.js` contêm os oito carros em destaque. `archetypes.js` e `generic.js` geram o restante dos modelos. Janelas, faróis, grades, placas e adesivos são desenhados em telas e projetados na carroceria. Cada carro tem um modelo detalhado para vitrine e corridas, além de um modelo mais leve para garagem, tráfego e cidade.
 
 `dev/cars.html` é um laboratório para inspecionar os modelos, por exemplo `http://localhost:5173/dev/cars.html?model=amgsuv&view=fq&rot=0&dist=6`. Também aceita câmera exata (`pos`, `look`, `fov`) e iluminação `env=studio`.
 

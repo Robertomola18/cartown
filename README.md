@@ -98,7 +98,7 @@ Cuando el proxy gestione HTTPS, activa `CARTON_TRUST_PROXY=1` y `CARTON_COOKIE_S
 | **Mi garaje** | Garaje isométrico con pósters, elevadores rojos, cartel, cruce con tráfico y coches de amigos aparcados fuera. |
 | **Clientes** | Coches NPC llegan, aparcan y piden aceite, neumáticos, frenos, puesta a punto, lavado, encerado o repintado. Cada servicio consume combustible y entrega monedas, experiencia y propinas. |
 | **Trabajos** | Hasta dos encargos que avanzan en tiempo real y un hueco de taller para instalar mejoras a precio reducido. |
-| **Comprar coches** | Concesionario con 19 vehículos, estadísticas y elección de color. |
+| **Comprar coches** | Concesionario con 21 vehículos, estadísticas y elección de color. |
 | **Pintar y tuning** | Acabados, techo bicolor, 13 diseños de llantas, vinilos, alerones, cristales, suspensión, luces y mejoras mecánicas. |
 | **Editar garaje** | Compra, coloca, mueve, gira y vende elevadores, lavadero, cabina de pintura, arcade, jukebox, mesas y mucho más. Incluye temas de suelo y paredes y ampliaciones del solar. |
 | **Carreras** | Salida con semáforo, revolucionar, cambiar en la zona verde y nitro. Carreras de cuarto de milla contra IA, amigos NPC, rivales en línea o un segundo jugador en el mismo teclado. |
@@ -117,7 +117,7 @@ Cuando el proxy gestione HTTPS, activa `CARTON_TRUST_PROXY=1` y `CARTON_COOKIE_S
 
 ## Cómo se modelan los coches
 
-Los coches se generan por código en `src/cars/`; no hay archivos de malla externos. `bodyV2.js` crea una carrocería lisa a partir de curvas medidas en metros; `featured.js` y `featured2.js` contienen los seis coches de las fotos de referencia; `archetypes.js` y `generic.js` generan el resto de modelos. Los cristales, faros, parrillas, matrículas y vinilos se dibujan en lienzos y se proyectan sobre la carrocería. Cada coche tiene dos niveles de detalle: uno para expositor y carreras, y otro ligero para garaje, tráfico y pueblo.
+Los coches se generan por código en `src/cars/`; no hay archivos de malla externos. `bodyV2.js` crea una carrocería lisa a partir de curvas medidas en metros; `featured.js`, `featured2.js` y `featured3.js` contienen los ocho coches destacados; `archetypes.js` y `generic.js` generan el resto de modelos. Los cristales, faros, parrillas, matrículas y vinilos se dibujan en lienzos y se proyectan sobre la carrocería. Cada coche tiene dos niveles de detalle: uno para expositor y carreras, y otro ligero para garaje, tráfico y pueblo.
 
 `dev/cars.html` sirve como laboratorio para inspeccionar los modelos, por ejemplo `http://localhost:5173/dev/cars.html?model=amgsuv&view=fq&rot=0&dist=6`. También admite cámara exacta (`pos`, `look`, `fov`) e iluminación `env=studio`.
 

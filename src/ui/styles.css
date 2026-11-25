@@ -35,6 +35,7 @@ html, body {
 #ui > * { pointer-events: auto; }
 #ui > .world-labels, #ui > .hud, #ui > .toasts, #ui > .banner, #ui > .race-hud, #ui > .town-hud, #ui > .mode-layer, #ui > .editor-layer { pointer-events: none; }
 .hud button, .hud .pill, .mode-layer > *, .editor-layer > *, .race-hud button, .race-hud .race-result, .town-hud button, .town-hud canvas, .town-hud .town-prompt { pointer-events: auto; }
+.hud button { touch-action: manipulation; }
 
 button { font-family: var(--font); cursor: pointer; border: none; color: inherit; }
 input, select, textarea { font-family: var(--font); }

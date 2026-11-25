@@ -19,6 +19,12 @@ import { PathMover, headingOf } from '../world/mover.js';
 const ISO_ELEV = THREE.MathUtils.degToRad(30);
 const CAR_FOOT = { w: 3, d: 2 };
 
+function flatItemY(def, item = null) {
+  if (!def?.flat) return 0;
+  const layer = item?.layer ?? def.layer;
+  return layer ? 0.006 + layer * 0.004 : 0.015;
+}
+
 export class GarageScene {
   constructor(engine, state, labels, opts = {}) {
     this.engine = engine;
@@ -167,19 +173,10 @@ export class GarageScene {
     sign.position.set(Math.min(N * 0.55, N - 3.5), wallH + 0.62, -0.12);
     g.add(sign);
     box(g, 6.2, 1.1, 0.12, mat('#1b1c20'), sign.position.x, wallH + 0.07, -0.22, 0.03);
-    // tall sign tower at the back corner (the "Car Town" totem from the original)
-    const tower = new THREE.Group();
-    box(tower, 0.5, 4.6, 0.5, mat('#3a3d44', { rough: 0.5, metal: 0.5 }), 0, 0, 0, 0.05);
-    const towerSign = signTexture('tower', 'CAR TOWN', { bg: '#1f4fb6', fg: '#ffd21a', w: 512, h: 256, sub: 'GARAGE · SERVICE · RACING' });
-    const ts = new THREE.Mesh(new THREE.BoxGeometry(2.6, 1.3, 0.25), [mat('#1f4fb6'), mat('#1f4fb6'), mat('#1f4fb6'), mat('#1f4fb6'),
-      new THREE.MeshStandardMaterial({ map: towerSign, emissive: 0xffffff, emissiveMap: towerSign, emissiveIntensity: 0.2 }),
-      new THREE.MeshStandardMaterial({ map: towerSign })]);
-    ts.position.y = 4.9;
-    ts.castShadow = true;
-    tower.add(ts);
-    tower.position.set(-0.9, 0, -0.9);
-    tower.rotation.y = -Math.PI / 4;
-    g.add(tower);
+    const townSign = signTexture('tower', 'CAR TOWN', { bg: '#1f4fb6', fg: '#ffd21a', w: 512, h: 256, sub: 'GARAGE · SERVICE · RACING' });
+    const panel = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 1.3), new THREE.MeshStandardMaterial({ map: townSign, roughness: 0.5, emissive: 0xffffff, emissiveMap: townSign, emissiveIntensity: 0.2 }));
+    panel.position.set(Math.min(N * 0.18, 2.8), 1.95, 0.02);
+    g.add(panel);
     // curb along the open front edges
     const curbM = mat('#c9c4b8', { rough: 0.8 });
     box(g, N, 0.06, 0.12, curbM, N / 2, 0, N - 0.02, 0.02);
@@ -283,7 +280,7 @@ export class GarageScene {
       }
     }
     const f = footprint(it.type, it.rot || 0);
-    g.position.set(it.x + f.w / 2, def.flat ? 0.015 : 0, it.z + f.d / 2);
+    g.position.set(it.x + f.w / 2, flatItemY(def, it), it.z + f.d / 2);
     g.rotation.y = ((it.rot || 0) * Math.PI) / 2;
   }
 
@@ -1013,7 +1010,7 @@ export class GarageScene {
     p.x = x;
     p.z = z;
     p.ok = this.canPlace(p.kind === 'car' ? 'car' : p.type, x, z, p.rot, { ignoreUid: p.uid, ignoreCar: p.kind === 'car' ? p.id : null });
-    p.ghost.position.set(x + f.w / 2, def?.flat ? 0.015 : 0, z + f.d / 2);
+    p.ghost.position.set(x + f.w / 2, flatItemY(def, p), z + f.d / 2);
     p.mesh.position.set(0, 0, 0);
     p.mesh.rotation.y = (p.rot * Math.PI) / 2;
     p.pad.scale.set(f.w, f.d, 1);
@@ -1036,6 +1033,7 @@ export class GarageScene {
     }
     const items = this.state.garage.items;
     const placement = { x: p.x, z: p.z, rot: p.rot, wall: p.wall || undefined, surfaceUid: p.surfaceUid || undefined, slot: p.slot };
+    if (p.kind === 'item' && ITEMS[p.type]?.layer) placement.layer = ITEMS[p.type].layer;
     if (p.uid) {
       Object.assign(items.find((i) => i.uid === p.uid), placement);
     } else {

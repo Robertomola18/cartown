@@ -84,6 +84,7 @@ export class App {
     window.addEventListener('pointerdown', unlock);
     window.addEventListener('keydown', unlock);
     this.goGarage();
+    this.restorePendingScene();
     if (!this.state.data.started) {
       openOnboarding(this, () => {
         this.garage.build();
@@ -234,6 +235,29 @@ export class App {
     closePopup();
   }
 
+  restorePendingScene() {
+    let scene = null;
+    try {
+      const url = new URL(location.href);
+      const value = url.searchParams.get('goto');
+      if (value === 'race' || value === 'town') scene = value;
+      if (value !== null) {
+        url.searchParams.delete('goto');
+        history.replaceState(history.state, '', url.pathname + url.search + url.hash);
+      }
+    } catch {}
+    try { sessionStorage.removeItem('cartown:pendingScene'); } catch {}
+    if (scene === 'race') this.openRaceMenu();
+    else if (scene === 'town') this.goTown();
+  }
+
+  _navGuard(key) {
+    this._navBusy = this._navBusy || {};
+    if (Date.now() - (this._navBusy[key] || 0) < 500) return false;
+    this._navBusy[key] = Date.now();
+    return true;
+  }
+
   goGarage() {
     this.returnTo = null;
     this.setMode('garage');
@@ -264,6 +288,7 @@ export class App {
   }
 
   openRaceMenu(preset) {
+    if (!this._navGuard('race')) return;
     this.returnTo = this.mode === 'town' ? 'town' : null;
     if (!preset?.friend) {
       const car = preset?.carId ? this.state.getCar(preset.carId) : this.state.activeCar;
@@ -274,7 +299,14 @@ export class App {
     }
     audio.click();
     if (this.mode !== 'garage' && this.mode !== 'town') this.goGarage();
-    this.race.openMenu(preset);
+    try {
+      this.race.openMenu(preset);
+    } catch (error) {
+      console.warn('openRaceMenu', error);
+      toast(t('socialError'), 'warn', 4000);
+      this.returnTo = null;
+      this.goGarage();
+    }
   }
 
   goBack() {
@@ -288,15 +320,23 @@ export class App {
   }
 
   goTown({ reset = false } = {}) {
+    if (!this._navGuard('town')) return;
     if (this.state.isCarBusy(this.state.activeCar?.id)) {
       toast(t('editorCarInWorkshop'), 'warn');
       return;
     }
     audio.click();
-    if (!this.town) this.town = new TownScene(this.engine, this.state);
-    this.labels.setVisible(false);
-    this.townUI.open({ reset });
-    this.state.emitTutorialEvent({ type: 'town:opened' });
+    try {
+      if (!this.town) this.town = new TownScene(this.engine, this.state);
+      this.labels.setVisible(false);
+      this.townUI.open({ reset });
+      this.state.emitTutorialEvent({ type: 'town:opened' });
+    } catch (error) {
+      console.warn('goTown', error);
+      toast(t('socialError'), 'warn', 4000);
+      this.labels.setVisible(true);
+      this.goGarage();
+    }
   }
 
   visitGarage(host, { isBot = false } = {}) {

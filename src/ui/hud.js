@@ -72,7 +72,7 @@ export class Hud {
     this.cash = el('span', { class: 'pill-value' }, '0');
     const coinPill = el('div', { class: 'pill pill-coins' }, el('span', { class: 'pill-icon', html: icon('coin') }), this.coins);
     const cashPill = el('div', { class: 'pill pill-cash' }, el('span', { class: 'pill-icon', html: icon('cash') }), this.cash);
-    this.raceBtn = el('button', { class: 'pink-btn', 'data-tutorial': 'raceButton', title: t('race'), onclick: () => app.openRaceMenu() }, el('span', { html: icon('flag') }), el('small', {}, t('race')));
+    this.raceBtn = el('button', { class: 'pink-btn', 'data-tutorial': 'raceButton', title: t('race'), onclick: () => this.nav('race', () => app.openRaceMenu()) }, el('span', { html: icon('flag') }), el('small', {}, t('race')));
     this.goalsBtn = el('button', { class: 'pink-btn goals', title: t('goals'), onclick: () => app.openGoals() }, el('span', { html: icon('trophy') }), el('small', {}, t('missions')));
     this.goalsBadge = el('i', { class: 'badge hidden' }, '!');
     this.goalsBtn.appendChild(this.goalsBadge);
@@ -104,7 +104,7 @@ export class Hud {
         el('button', { class: 'mini-btn', title: t('settings'), onclick: () => app.openSettings(), html: icon('gear') })));
 
     // --- bottom ---
-    this.mapBtn = el('button', { class: 'map-btn', 'data-tutorial': 'mapButton', title: t('town'), onclick: () => app.goTown() }, el('span', { html: icon('map') }), el('small', {}, t('town')));
+    this.mapBtn = el('button', { class: 'map-btn', 'data-tutorial': 'mapButton', title: t('town'), onclick: () => this.nav('town', () => app.goTown()) }, el('span', { html: icon('map') }), el('small', {}, t('town')));
     this.garageLabel = el('div', { class: 'garage-label' }, el('span', { html: icon('car') }), el('b', {}, t('myGarage')));
     const bl = el('div', { class: 'hud-bl' }, this.mapBtn, this.garageLabel);
     this.luxValue = el('b', { class: 'lux-value' }, '0');
@@ -127,6 +127,14 @@ export class Hud {
       state.tickFuel();
       this.refreshFuelTimer();
     }, 500);
+  }
+
+  nav(scene, action) {
+    if (this._navBusy) return;
+    this._navBusy = true;
+    setTimeout(() => { this._navBusy = false; }, 500);
+    try { sessionStorage.setItem('cartown:pendingScene', scene); } catch {}
+    action();
   }
 
   refreshAll() {

@@ -121,6 +121,13 @@ export class GameState extends Emitter {
     const size = Number(this.data.garage.size);
     this.data.garage.size = EXPANSIONS.some((e) => e.size === size) ? size : EXPANSIONS[0].size;
     if (!Array.isArray(this.data.garage.items)) this.data.garage.items = [];
+    for (const it of this.data.garage.items) {
+      if (!it || it.type !== 'wallPlaque') continue;
+      it.wall = true;
+      it.z = 0;
+      it.rot = 0;
+      it.x = clamp(Number(it.x) || 0, 0, Math.max(0, size - (ITEMS.wallPlaque?.w || 2)));
+    }
     if (!Array.isArray(this.data.cars)) this.data.cars = [];
     if (!Number.isFinite(Number(this.data.level))) this.data.level = 1;
     this.ensureJobs();

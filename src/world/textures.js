@@ -122,6 +122,82 @@ export function floorTexture(type, tiles) {
   return t;
 }
 
+export const TILE_DRAW = {
+  tileWoodLight(ctx, s) {
+    FLOOR_DRAW.wood(ctx, s);
+    ctx.fillStyle = 'rgba(255,246,225,0.22)';
+    ctx.fillRect(0, 0, s, s);
+    ctx.strokeStyle = 'rgba(120,80,40,0.45)';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(1.5, 1.5, s - 3, s - 3);
+  },
+  tileWoodDark(ctx, s) {
+    FLOOR_DRAW.wood(ctx, s);
+    ctx.fillStyle = 'rgba(20,10,4,0.45)';
+    ctx.fillRect(0, 0, s, s);
+    ctx.strokeStyle = 'rgba(255,220,170,0.18)';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(1.5, 1.5, s - 3, s - 3);
+  },
+  tileStone(ctx, s) {
+    ctx.fillStyle = '#8d8b82';
+    ctx.fillRect(0, 0, s, s);
+    for (let i = 0; i < 26; i++) {
+      ctx.fillStyle = i % 2 ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.07)';
+      ctx.beginPath();
+      ctx.ellipse(Math.random() * s, Math.random() * s, 5 + Math.random() * 12, 3 + Math.random() * 7, Math.random() * Math.PI, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    noise(ctx, s, s, 14);
+    ctx.strokeStyle = 'rgba(60,58,52,0.5)';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(1.5, 1.5, s - 3, s - 3);
+  },
+  tileConcrete(ctx, s) {
+    FLOOR_DRAW.concrete(ctx, s);
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.fillRect(0, 0, s, s);
+    ctx.strokeStyle = 'rgba(70,72,76,0.45)';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(2, 2, s - 4, s - 4);
+  },
+  tileMarble(ctx, s) {
+    ctx.fillStyle = '#eceae4';
+    ctx.fillRect(0, 0, s, s);
+    for (let i = 0; i < 7; i++) {
+      ctx.strokeStyle = i % 2 ? 'rgba(120,125,135,0.28)' : 'rgba(160,155,145,0.35)';
+      ctx.lineWidth = 1 + Math.random() * 2;
+      const y = Math.random() * s;
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.bezierCurveTo(s * 0.3, y + (Math.random() - 0.5) * 26, s * 0.65, y + (Math.random() - 0.5) * 26, s, y + (Math.random() - 0.5) * 18);
+      ctx.stroke();
+    }
+    noise(ctx, s, s, 5);
+    ctx.strokeStyle = 'rgba(140,138,130,0.45)';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(1.5, 1.5, s - 3, s - 3);
+  },
+  tileChecker(ctx, s) {
+    FLOOR_DRAW.checker(ctx, s);
+    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(s / 2, 0);
+    ctx.lineTo(s / 2, s);
+    ctx.moveTo(0, s / 2);
+    ctx.lineTo(s, s / 2);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(120,120,120,0.5)';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(1.5, 1.5, s - 3, s - 3);
+  },
+};
+
+export function tileTexture(type) {
+  return canvasTexture(`tile:${type}`, 128, 128, (ctx, s) => TILE_DRAW[type](ctx, s), { repeat: [1, 1] });
+}
+
 export const RUG_DRAW = {
   rugRed(ctx, s) {
     ctx.fillStyle = '#9c1024';

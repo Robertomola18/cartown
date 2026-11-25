@@ -235,8 +235,8 @@ export class TownScene {
         box(s, sx + 0.4, 0.5, sz + 0.4, mat('#1f4fb6'), cx, 5.1, cz + 2, 0.05);
         for (const ox of [-sx / 2, sx / 2]) for (const oz of [-sz / 2, sz / 2]) box(s, 0.3, 5, 0.3, mat('#d0d4da', { metal: 0.8, rough: 0.2 }), cx + ox, 0.16, cz + 2 + oz, 0.03);
         const cols = [-6.4, 0, 6.4];
-        const rows = [-3.2, 3.2];
-        FEATURED_IDS.slice(0, 6).forEach((id, i) => {
+        const rows = [-4.2, 0, 4.2];
+        FEATURED_IDS.forEach((id, i) => {
           const car = createCar(defaultConfig(id), { lod: 'low' });
           car.position.set(cx + cols[i % 3], 0.36, cz + 2 + rows[Math.floor(i / 3)]);
           car.rotation.y = 0;
