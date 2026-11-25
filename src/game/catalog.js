@@ -125,6 +125,7 @@ export const EXPANSIONS = [
 
 export const SERVICES = {
   lift: [
+    { id: 'expressLift', name: 'Express Lube', icon: '⚡', time: 2, fuel: 1, coins: 35, xp: 6, express: true },
     { id: 'oil', name: 'Oil Change', icon: '🛢️', time: 8, fuel: 1, coins: 45, xp: 8 },
     { id: 'tires', name: 'Tire Swap', icon: '🛞', time: 12, fuel: 1, coins: 65, xp: 11 },
     { id: 'brakes', name: 'Brake Job', icon: '🔧', time: 16, fuel: 2, coins: 110, xp: 18 },
@@ -134,10 +135,12 @@ export const SERVICES = {
     { id: 'restoration', name: 'Full Restoration', icon: '🏆', time: 720, fuel: 8, coins: 1600, xp: 260 },
   ],
   wash: [
+    { id: 'expressWash', name: 'Express Wash', icon: '⚡', time: 2, fuel: 1, coins: 30, xp: 5, express: true },
     { id: 'wash', name: 'Car Wash', icon: '🫧', time: 6, fuel: 1, coins: 40, xp: 7 },
     { id: 'wax', name: 'Wax & Polish', icon: '✨', time: 10, fuel: 1, coins: 70, xp: 11 },
   ],
   paint: [
+    { id: 'expressPaint', name: 'Express Touch-Up', icon: '⚡', time: 2, fuel: 1, coins: 45, xp: 7, express: true },
     { id: 'scratch', name: 'Scratch Repair', icon: '🎨', time: 15, fuel: 2, coins: 150, xp: 22 },
     { id: 'respray', name: 'Full Respray', icon: '🖌️', time: 26, fuel: 3, coins: 280, xp: 40 },
   ],

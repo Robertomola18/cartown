@@ -22,6 +22,7 @@ export class CustomerManager {
     this.scene = scene; // GarageScene
     this.list = [];
     this.spawnTimer = 4;
+    this.spawnCount = 0;
     this.paused = false;
   }
 
@@ -104,8 +105,10 @@ export class CustomerManager {
     const S = this.scene;
     const cfg = this.randomCfg();
     const obj = createCar(cfg, { lod: 'low' });
-    const services = SERVICES[station.kind];
-    const svc = pick(services);
+    const services = SERVICES[station.kind] || [];
+    const express = this.spawnCount++ % 3 === 2;
+    const pool = (express ? services.filter((entry) => entry.express) : services.filter((entry) => !entry.express));
+    const svc = pick(pool.length ? pool : services);
     const R = S.layout;
     obj.position.set(R.lane1, 0, -40);
     obj.rotation.y = headingOf(0, 1);
