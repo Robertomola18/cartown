@@ -161,7 +161,7 @@ npm test
 npm run build
 ```
 
-Para mais detalhes do jogo, consulte [`JUEGO.md`](JUEGO.md) e, em espanhol, [`PROYECTO.md`](PROYECTO.md).
+Para mais detalhes do jogo, consulte [`JUEGO.md`](JUEGO.md) e, em espanhol, [`PROYECTO.md`](PROYECTO.md). O manual detalhado com capturas está em [`MANUAL.md`](MANUAL.md) (espanhol).
 
 ## Aviso legal
 

@@ -203,7 +203,7 @@ npm run build
 ```
 
 See [`JUEGO.md`](JUEGO.md) for more game details (Spanish). The project overview
-is also available in Spanish as [`PROYECTO.md`](PROYECTO.md).
+is also available in Spanish as [`PROYECTO.md`](PROYECTO.md). The detailed manual with screenshots is in [`MANUAL.md`](MANUAL.md) (Spanish).
 
 ## Disclaimer
 
