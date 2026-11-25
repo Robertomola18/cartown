@@ -303,7 +303,7 @@ export class App {
       this.race.openMenu(preset);
     } catch (error) {
       console.warn('openRaceMenu', error);
-      toast(t('socialError'), 'warn', 4000);
+      toast(`${t('socialError')}: ${error?.message || error}`, 'warn', 6000);
       this.returnTo = null;
       this.goGarage();
     }

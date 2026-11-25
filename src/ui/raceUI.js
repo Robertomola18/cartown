@@ -55,6 +55,17 @@ export class RaceUI {
     this.session = null;
   }
 
+  safeStart(opp) {
+    try {
+      this.startVs(opp);
+    } catch (error) {
+      console.warn('race start', error);
+      try { if (this.app.mode === 'race') this.endSession(true); } catch (cleanupError) { console.warn('race cleanup', cleanupError); }
+      if (this.app.mode === 'race') this.app.goGarage();
+      this.app.toast(`${t('socialError')}: ${error?.message || error}`, 'warn', 6000);
+    }
+  }
+
   // ---------------------------------------------------------------------------------
   // Menu
   // ---------------------------------------------------------------------------------
@@ -99,7 +110,7 @@ export class RaceUI {
     renderCars();
     renderTabs();
     renderTab();
-    if (preset.friend) this.startVs({ kind: 'friend', friend: preset.friend });
+    if (preset.friend) this.safeStart({ kind: 'friend', friend: preset.friend });
   }
 
   myCfg() {
@@ -110,7 +121,8 @@ export class RaceUI {
     const st = this.app.state;
     const list = el('div', { class: 'opp-list' });
     for (const r of STREET_RACERS) {
-      const cfg = { ...defaultConfig(r.car.model), ...r.car };
+      const safe = sanitizeCfg(r.car);
+      const cfg = { ...defaultConfig(safe.model), ...safe };
       const img = el('img', { alt: '' });
       carThumb(cfg, img);
       const locked = r.tier > Math.max(1, Math.ceil(st.level / 2) + 1);
@@ -118,7 +130,7 @@ export class RaceUI {
         img,
         el('div', { class: 'opp-info' }, el('b', {}, r.name), el('small', {}, `${MODELS[cfg.model].name} · PR ${ratingOf(cfg)}`), el('span', { class: 'stars' }, '★'.repeat(r.tier))),
         el('div', { class: 'opp-reward', html: `${icon('coin')} ${fmt(r.reward)}` }),
-        el('button', { class: 'btn btn-green', onclick: () => (locked ? (audio.error(), this.app.toast(t('locked', { n: (r.tier - 1) * 2 }), 'warn')) : this.startVs({ kind: 'street', racer: r, cfg })), html: `${t('challenge')} <small>${icon('fuel')}1</small>` })));
+        el('button', { class: 'btn btn-green', onclick: () => (locked ? (audio.error(), this.app.toast(t('locked', { n: (r.tier - 1) * 2 }), 'warn')) : this.safeStart({ kind: 'street', racer: r, cfg })), html: `${t('challenge')} <small>${icon('fuel')}1</small>` })));
     }
     return list;
   }
@@ -130,14 +142,15 @@ export class RaceUI {
     const local = (app.state.data.friends || []).slice().sort((a, b) => score(b) - score(a));
     const friends = [...local, ...NPC_FRIENDS];
     for (const f of friends) {
-      const cfg = { ...defaultConfig(f.car.model), ...f.car };
+      const safe = sanitizeCfg(f.car);
+      const cfg = { ...defaultConfig(safe.model), ...safe };
       const img = el('img', { alt: '' });
       carThumb(cfg, img);
       list.appendChild(el('div', { class: 'opp' },
         el('img', { class: 'portrait', src: portrait(f.avatar, 64), alt: '' }),
         el('div', { class: 'opp-info' }, el('b', {}, f.name), el('small', {}, `${t('level')} ${f.level} · ${MODELS[cfg.model].name} · PR ${ratingOf(cfg)}`)),
         img,
-        el('button', { class: 'btn btn-green', onclick: () => this.startVs({ kind: 'friend', friend: f }), html: `${t('challenge')} <small>${icon('fuel')}1</small>` })));
+        el('button', { class: 'btn btn-green', onclick: () => this.safeStart({ kind: 'friend', friend: f }), html: `${t('challenge')} <small>${icon('fuel')}1</small>` })));
     }
     list.appendChild(el('div', { class: 'hint' }, t('raceFriendTip')));
     return list;
@@ -155,7 +168,7 @@ export class RaceUI {
       el('p', {}, t('raceLocalHelp')),
       el('div', { class: 'p2-row' }, el('label', {}, t('racePlayer2Car')), select, preview),
       el('div', { class: 'controls-help' }, el('div', {}, t('controlsP1')), el('div', {}, t('controlsP2'))),
-      el('button', { class: 'btn btn-green btn-big', onclick: () => this.startVs({ kind: 'local', cfg: this.p2Cfg(p2Model) }) }, t('start')));
+      el('button', { class: 'btn btn-green btn-big', onclick: () => this.safeStart({ kind: 'local', cfg: this.p2Cfg(p2Model) }) }, t('start')));
   }
 
   p2Cfg(model) {
@@ -215,7 +228,7 @@ export class RaceUI {
       net.on('start', (m) => {
         const opp = m.room.players.find((p) => p.id !== net.id);
         if (!opp) return;
-        this.startVs({ kind: 'online', cfg: sanitizeCfg(opp.player.car), name: opp.player.name, avatar: opp.player.avatar, startAt: m.startAt, serverNow: m.now });
+        this.safeStart({ kind: 'online', cfg: sanitizeCfg(opp.player.car), name: opp.player.name, avatar: opp.player.avatar, startAt: m.startAt, serverNow: m.now });
       }),
     ];
   }
@@ -243,7 +256,7 @@ export class RaceUI {
     }
     this.menu?.close();
     this.menu = null;
-    const myCfg = JSON.parse(JSON.stringify(this.myCfg()));
+    const myCfg = sanitizeCfg(this.myCfg() || defaultConfig('hatch'));
     let oppCfg;
     let oppName;
     let oppAvatar = {};
@@ -300,8 +313,9 @@ export class RaceUI {
     this.session = s;
     this.starting = false;
     this.buildHud(s);
-    s.engines = [audio.engine({ electric: MODELS[myCfg.model].electric })];
-    if (opp.kind === 'local' || opp.kind === 'street' || opp.kind === 'friend') s.engines.push(audio.engine({ electric: MODELS[oppCfg.model].electric, vol: opp.kind === 'local' ? 0.2 : 0.08 }));
+    const engine = (opts) => { try { return audio.engine(opts); } catch (error) { console.warn('race audio', error); return { set() {}, stop() {} }; } };
+    s.engines = [engine({ electric: MODELS[myCfg.model].electric })];
+    if (opp.kind === 'local' || opp.kind === 'street' || opp.kind === 'friend') s.engines.push(engine({ electric: MODELS[oppCfg.model].electric, vol: opp.kind === 'local' ? 0.2 : 0.08 }));
     this.keyDown = (e) => this.onKey(e, true);
     this.keyUp = (e) => this.onKey(e, false);
     window.addEventListener('keydown', this.keyDown);
@@ -447,7 +461,7 @@ export class RaceUI {
     // engine audio
     s.engines.forEach((eng, i) => {
       const sim = s.sims[i];
-      if (sim) eng.set(Math.min(1, sim.rpmFrac), sim.launched ? (sim.shiftTimer > 0 ? 0.2 : 1) : sim.throttle ? 0.8 : 0.3);
+      if (sim && eng) eng.set(Math.min(1, sim.rpmFrac), sim.launched ? (sim.shiftTimer > 0 ? 0.2 : 1) : sim.throttle ? 0.8 : 0.3);
     });
     // events -> messages
     for (let i = 0; i < s.sims.length; i++) {
@@ -573,7 +587,7 @@ export class RaceUI {
       return;
     }
     this.endSession(false, true);
-    this.startVs(opp);
+    this.safeStart(opp);
   }
 
   endSession(aborted, keepMode = false) {

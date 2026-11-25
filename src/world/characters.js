@@ -109,6 +109,7 @@ export function animateAvatar(root, dt, speed = 0, working = false, seated = fal
 // --- 2D portraits for HTML UI ------------------------------------------------------------------
 const portraitCache = new Map();
 export function portrait(av = {}, size = 64) {
+  av = av && typeof av === 'object' ? av : {};
   const key = JSON.stringify(av) + size;
   if (portraitCache.has(key)) return portraitCache.get(key);
   const c = document.createElement('canvas');
