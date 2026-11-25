@@ -529,13 +529,13 @@ export class GameState extends Emitter {
     });
     this.data.jobs.push(job);
     this.emit('jobs');
-    this.save();
+    this.saveNow();
     return { ok: true, job };
   }
 
   startOwnJob(carId, upgradeKey, stationUid) {
-    const car = this.getCar(carId);
     if (!car) return { ok: false, error: 'car' };
+
     if (this.isCarBusy(carId)) return { ok: false, error: 'busy' };
     if (this.jobsUsed('own') >= OWN_JOB_SLOTS) return { ok: false, error: 'slots' };
     if (!stationUid) return { ok: false, error: 'station' };
@@ -559,7 +559,7 @@ export class GameState extends Emitter {
     this.data.jobs.push(job);
     this.emit('jobs');
     this.emitTutorialEvent({ type: 'job:started', jobId: job.id, tutorial });
-    this.save();
+    this.saveNow();
     return { ok: true, job };
   }
 

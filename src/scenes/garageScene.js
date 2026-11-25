@@ -524,6 +524,21 @@ export class GarageScene {
     return this.customers.claimByJob(jobId);
   }
 
+  focusJob(job) {
+    if (job.kind === 'customer') {
+      const c = this.customers.list.find((entry) => entry.job?.id === job.id);
+      if (c && c.phase === 'waiting') this.customers.startJobService(c);
+      return;
+    }
+    const st = this.stations.find((entry) => entry.playerJob?.id === job.id);
+    if (st && !jobReady(job)) this.assignOwnJobMechanic(st);
+  }
+
+  assignOwnJobMechanic(st) {
+    if (this.mechanics.some((m) => m.busy && m.station === st)) return;
+    this.assignMechanic(st);
+  }
+
   isStationBusy(uid) {
     const st = this.stations.find((entry) => entry.uid === uid);
     return Boolean(st && (st.occupant || st.playerJob));
@@ -557,6 +572,7 @@ export class GarageScene {
       if (job.stationUid !== st.uid) changed = true;
       job.stationUid = st.uid;
       st.playerJob = job;
+      if (!jobReady(job)) this.assignOwnJobMechanic(st);
       const obj = this.carMeshes.get(job.carId);
       if (obj) {
         st.playerCarObj = obj;
@@ -609,6 +625,8 @@ export class GarageScene {
   detachOwnJob(job) {
     const st = this.stations.find((entry) => entry.playerJob && entry.playerJob.id === job.id);
     if (st) {
+      const m = this.mechanics.find((x) => x.busy && x.station === st);
+      if (m) this.releaseMechanic(m);
       st.playerJob = null;
       this.clearJobLabel(st);
       if (st.playerCarObj) delete st.playerCarObj.userData.mover;
@@ -685,6 +703,7 @@ export class GarageScene {
     this.mechanics.push({ obj: this.player, home: playerHome, busy: false, target: null, working: false, seated: false, seat: null, isPlayer: true });
     this.customers?.reassignMechanics?.();
     this.rebuildIdleSeats();
+    this.syncJobStations();
   }
 
   rebuildIdleSeats() {
@@ -1299,6 +1318,8 @@ export class GarageScene {
         }
       }
       if (st.playerJob && this.state.activeJobs('own').some((job) => job.id === st.playerJob.id)) {
+        const m = this.mechanics.find((x) => x.busy && x.station === st);
+        if (m && jobReady(st.playerJob)) this.releaseMechanic(m);
         this.animateStation(st, dt, true, null);
         if (st.jobLabelText) st.jobLabelText.textContent = jobReady(st.playerJob) ? t('jobsReady') : fmtJobTime(jobRemaining(st.playerJob));
       } else if (!st.occupant || st.occupant.phase !== 'working') {

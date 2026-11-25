@@ -90,7 +90,9 @@ export function openJobs(app) {
       const sub = job.kind === 'customer'
         ? t('jobsCustomerSub', { fuel: job.fuel, coins: fmt(job.coins) })
         : t('jobsOwnSub', { car: app.carName(st.getCar(job.carId) || { cfg: { model: 'hatch' } }), level: job.level + 1, xp: job.xp });
-      list.append(el('div', { class: `job-card ${ready ? 'ready' : ''}` },
+      list.append(el('div', { class: `job-card ${ready ? 'ready' : ''}`, onclick: (e) => {
+        if (!e.target.closest?.('button')) app.garage?.focusJob?.(job);
+      } },
         el('div', { class: 'job-head' },
           el('span', { class: 'job-emoji' }, job.icon || '🔧'),
           el('div', { class: 'job-title' }, el('b', {}, job.serviceId ? t(`svc.${job.serviceId}`) : t(`up.${job.upgradeKey}`)), el('small', {}, sub)),
@@ -142,12 +144,13 @@ export function openJobs(app) {
       customer.append(el('button', {
         class: 'job-service',
         disabled: customerFull || noFuel || noStation || noFreeStation || noMechanic,
-        onclick: () => {
+        onclick: async () => {
           const result = app.startCustomerJob ? app.startCustomerJob(service) : st.startCustomerJob(service.id);
           if (!result.ok) {
             toast(errorText(result.error), 'warn');
             return;
           }
+          await st.saveNow();
           toast(t('jobsAccepted', { name: t(`svc.${service.id}`) }), 'good');
           refreshAll();
         },
@@ -176,13 +179,14 @@ export function openJobs(app) {
             class: `btn job-start ${tutorialJob ? 'btn-green tutorial-job' : 'btn-blue'}`,
             'data-tutorial': tutorialJob ? 'repairStart' : null,
             disabled: Boolean(busy) || !lift,
-            onclick: () => {
+            onclick: async () => {
               const result = st.startOwnJob(car.id, select.value, lift?.uid);
               if (!result.ok) {
                 toast(errorText(result.error), 'warn');
                 return;
               }
               app.garage?.attachOwnJob(result.job);
+              await st.saveNow();
               toast(t(tutorialJob ? 'tutorialJobStarted' : 'jobsInstalled'), 'good');
               refreshAll();
             },

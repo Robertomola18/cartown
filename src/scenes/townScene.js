@@ -231,8 +231,9 @@ export class TownScene {
   }
 
   zone(id, label, x, z, action, color = '#ffe14a', r = 3.4) {
-    const ring = glowDisc(color, r * 0.94);
-    ring.position.set(x, 0.05, z);
+    const ring = glowDisc(color, r);
+    ring.position.set(x, 0.08, z);
+    ring.renderOrder = 2;
     this.scene.add(ring);
     this.zones.push({ id, label, x, z, r, action, ring });
   }
@@ -742,7 +743,7 @@ export class TownScene {
     let active = null;
     for (const z of this.zones) {
       const d = Math.hypot(this.pos.x - z.x, this.pos.y - z.z);
-      z.ring.material.opacity = 0.55 + Math.sin(time * 5) * 0.25;
+      z.ring.material.opacity = 0.78 + Math.sin(time * 5) * 0.18;
       if (d < z.r) active = z;
     }
     this.activeZone = active;
