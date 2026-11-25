@@ -18,6 +18,16 @@ Las imágenes son capturas del juego enfrentadas al original y a las fotos de re
 | --- | --- |
 | ![Segunda tanda de coches comparada con las fotos](docs/cars-vs-photos-2.jpg) | ![Opel Frontera del juego comparado con la foto](docs/frontera-vs-photo.jpg) |
 
+Capturas directas de una partida; hay más en el [`MANUAL.md`](MANUAL.md):
+
+| Garaje y ciudad | Menú de Carreras con miniaturas 3D |
+| --- | --- |
+| ![Garaje y ciudad](docs/manual/01-garage.jpg) | ![Menú de Carreras](docs/manual/02-race-menu.jpg) |
+
+| Carrera de cuarto de milla | Concesionario y personalización |
+| --- | --- |
+| ![Carrera en curso](docs/manual/03-race.jpg) | ![Tienda y personalización](docs/manual/04-shop.jpg) |
+
 ## Una vuelta por el juego
 
 1. **Entra en tu garaje.** Elige idioma, sigue el tutorial y revisa el HUD: dinero, experiencia, nivel, combustible, trabajos y menú principal.

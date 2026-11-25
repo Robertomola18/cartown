@@ -23,6 +23,16 @@ reference photos used to model the cars.
 | --- | --- |
 | ![Second car batch compared with reference photos](docs/cars-vs-photos-2.jpg) | ![In-game Opel Frontera compared with its reference photo](docs/frontera-vs-photo.jpg) |
 
+Direct captures from a live playthrough; more are available in the [`MANUAL.md`](MANUAL.md) (Spanish):
+
+| Garage and town | Race menu with 3D thumbnails |
+| --- | --- |
+| ![Garage and town](docs/manual/01-garage.jpg) | ![Race menu](docs/manual/02-race-menu.jpg) |
+
+| Quarter-mile race | Dealer and customization |
+| --- | --- |
+| ![Race in progress](docs/manual/03-race.jpg) | ![Shop and customization](docs/manual/04-shop.jpg) |
+
 ## A tour of the game
 
 1. **Open your garage.** Pick a language, follow the tutorial and read the HUD:
