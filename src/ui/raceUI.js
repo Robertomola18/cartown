@@ -599,6 +599,7 @@ export class RaceUI {
   endSession(aborted, keepMode = false) {
     const s = this.session;
     if (!s) return;
+    const tutorial = Boolean(this.tutorialRaceId);
     if (this.tutorialRaceId) {
       const sessionId = this.tutorialRaceId;
       this.tutorialRaceId = null;
@@ -617,8 +618,8 @@ export class RaceUI {
     this.session = null;
     this.starting = false;
     if (!keepMode) {
-      this.app.goBack();
-      if (s.remote && !aborted) this.openMenu({ tab: 'online' });
+      if (tutorial || aborted) this.app.goBack();
+      else this.app.openRaceMenu({ tab: this.tab });
     }
     void pick;
   }
