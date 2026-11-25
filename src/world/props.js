@@ -809,8 +809,8 @@ function table(type) {
   top.receiveShadow = true;
   for (const x of [-1, 1]) {
     for (const z of [-1, 1]) {
-      box(g, 0.1, h - 0.04, 0.1, mat('#3c4148', { rough: 0.4, metal: 0.6 }),
-        x * (def.w / 2 - 0.16), (h - 0.04) / 2, z * (def.d / 2 - 0.16), 0.015);
+      box(g, 0.1, h, 0.1, mat('#3c4148', { rough: 0.4, metal: 0.6 }),
+        x * (def.w / 2 - 0.16), 0, z * (def.d / 2 - 0.16), 0.015);
     }
   }
   return g;

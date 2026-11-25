@@ -7,13 +7,14 @@ export class Engine {
   constructor(container) {
     this.container = container;
     const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    this.mobile = mobile;
     this.maxPixelRatio = mobile ? 1.25 : 2;
     const renderer = new THREE.WebGLRenderer({ antialias: !mobile, preserveDrawingBuffer: true, powerPreference: mobile ? 'default' : 'high-performance' });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.maxPixelRatio));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NeutralToneMapping;
     renderer.toneMappingExposure = 1.0;
-    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.enabled = !mobile;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
     renderer.domElement.className = 'game-canvas';

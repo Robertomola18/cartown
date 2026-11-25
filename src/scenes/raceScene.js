@@ -31,11 +31,12 @@ export class RaceScene {
 
   build() {
     const s = this.scene;
+    const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     s.add(new THREE.HemisphereLight(0xeaf6ff, 0x6d8f4e, 1.2));
     const sun = new THREE.DirectionalLight(0xfff1d6, 2.3);
     sun.position.set(-20, 40, 25);
-    sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048);
+    sun.castShadow = !mobile;
+    sun.shadow.mapSize.set(mobile ? 512 : 2048, mobile ? 512 : 2048);
     Object.assign(sun.shadow.camera, { left: -20, right: 20, top: 20, bottom: -20, near: 1, far: 120 });
     s.add(sun, sun.target);
     this.sun = sun;

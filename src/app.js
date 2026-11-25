@@ -615,8 +615,9 @@ export class App {
 
   applyQuality(q) {
     const r = this.engine.renderer;
-    r.setPixelRatio(q === 'low' ? 1 : Math.min(window.devicePixelRatio || 1, this.engine.maxPixelRatio));
-    r.shadowMap.enabled = q !== 'low';
+    const low = q === 'low' || this.engine.mobile;
+    r.setPixelRatio(low ? 1 : Math.min(window.devicePixelRatio || 1, this.engine.maxPixelRatio));
+    r.shadowMap.enabled = !low;
     this.engine.resize();
   }
 
