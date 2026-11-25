@@ -35,7 +35,7 @@ Las imágenes son capturas del juego enfrentadas al original y a las fotos de re
 | --- | --- |
 | **Mi garaje** | Garaje isométrico con pósters, elevadores rojos, cartel de pared, barrera de terciopelo, cruce con tráfico, coches de amigos aparcados fuera y editor de objetos. |
 | **Clientes** | Coches NPC con peticiones de aceite, neumáticos, frenos, tuning, lavado, encerado y repintado. Cada servicio consume combustible y entrega monedas, experiencia y propinas. |
-| **Trabajos** | Hasta dos encargos en tiempo real, progreso persistent y un hueco de taller para instalar mejoras a precio reducido. |
+| **Trabajos** | Hasta dos encargos en tiempo real, progreso persistente y un hueco de taller para instalar mejoras a precio reducido. |
 | **Comprar coches** | Concesionario con 21 vehículos, estadísticas, ocho modelos destacados y elección de color antes de la compra. |
 | **Pintar y tuning** | Acabados, techo bicolor, 13 diseños de llantas, vinilos, alerones, cristales, suspensión, underglow y mejoras mecánicas. |
 | **Editar garaje** | Compra, coloca, mueve, gira y vende elevadores, lavadero, cabina de pintura, arcade, jukebox, mesas, herramientas y baldosas. Incluye temas de suelo y pared, ampliaciones y anclaje de herramientas a mesas. |
