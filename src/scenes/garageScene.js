@@ -509,6 +509,7 @@ export class GarageScene {
       const kind = serviceStation(job.serviceId);
       let station = this.stations.find((st) => st.uid === job.stationUid && st.kind === kind && !st.occupant && !st.playerJob);
       if (!station) station = this.freeStation(kind);
+      if (!station) station = this.stations.find((st) => !st.occupant && !st.playerJob);
       if (!station) continue;
       if (job.stationUid !== station.uid) {
         job.stationUid = station.uid;

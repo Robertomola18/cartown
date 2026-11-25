@@ -193,10 +193,17 @@ export class GameState extends Emitter {
         }
         if (res.status === 409) {
           const data = await res.json().catch(() => null);
-          this.remoteConflict = true;
-          this.conflictRevision = Number.isFinite(Number(data?.revision)) ? Number(data.revision) : null;
-          this._remoteAgain = false;
-          this.emit('saveConflict', data || {});
+          const revision = Number.isFinite(Number(data?.revision)) ? Number(data.revision) : this.conflictRevision;
+          if (Number.isFinite(revision)) {
+            this.revision = revision;
+            this.remoteConflict = false;
+            this.conflictRevision = null;
+            this._remoteAgain = true;
+          } else {
+            this.remoteConflict = true;
+            this.conflictRevision = null;
+            this.emit('saveConflict', data || {});
+          }
           return;
         }
         if (res.ok) {
@@ -210,7 +217,7 @@ export class GameState extends Emitter {
       .finally(() => {
         this._remoteSaving = false;
         this._remotePromise = null;
-        if (this._remoteAgain && !this.remoteConflict) this.pushRemote();
+        if (this._remoteAgain && !this.remoteConflict) return this.pushRemote();
       });
     return this._remotePromise;
   }
@@ -534,6 +541,7 @@ export class GameState extends Emitter {
   }
 
   startOwnJob(carId, upgradeKey, stationUid) {
+    const car = this.getCar(carId);
     if (!car) return { ok: false, error: 'car' };
 
     if (this.isCarBusy(carId)) return { ok: false, error: 'busy' };
