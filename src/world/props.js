@@ -892,13 +892,11 @@ export function lampPost() {
 
 export function billboard() {
   const g = new THREE.Group();
-  const post = mat('#5b5f66', { rough: 0.5, metal: 0.5 });
-  for (const s of [-1.2, 1.2]) cylinder(g, 0.1, 0.12, 2.6, post, s, 0, 0, 10);
-  box(g, 3.6, 1.9, 0.2, mat('#2b2d31', { rough: 0.5 }), 0, 2.4, 0, 0.04);
-  const p = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.7), new THREE.MeshStandardMaterial({ map: billboardTexture(), roughness: 0.5, emissive: 0xffffff, emissiveMap: billboardTexture(), emissiveIntensity: 0.15 }));
-  p.position.set(0, 3.35, 0.11);
+  const tex = billboardTexture();
+  box(g, 3.6, 1.9, 0.12, mat('#2b2d31', { rough: 0.5 }), 0, 0.9, -0.03, 0.04);
+  const p = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 1.7), new THREE.MeshStandardMaterial({ map: tex, roughness: 0.5, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: 0.15 }));
+  p.position.set(0, 1.85, 0.04);
   g.add(p);
-  box(g, 3.4, 0.08, 0.5, post, 0, 2.3, 0.2, 0.02);
   return g;
 }
 

@@ -173,10 +173,19 @@ export class GarageScene {
     sign.position.set(Math.min(N * 0.55, N - 3.5), wallH + 0.62, -0.12);
     g.add(sign);
     box(g, 6.2, 1.1, 0.12, mat('#1b1c20'), sign.position.x, wallH + 0.07, -0.22, 0.03);
-    const townSign = signTexture('tower', 'CAR TOWN', { bg: '#1f4fb6', fg: '#ffd21a', w: 512, h: 256, sub: 'GARAGE · SERVICE · RACING' });
-    const panel = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 1.3), new THREE.MeshStandardMaterial({ map: townSign, roughness: 0.5, emissive: 0xffffff, emissiveMap: townSign, emissiveIntensity: 0.2 }));
-    panel.position.set(Math.min(N * 0.18, 2.8), 1.95, 0.02);
-    g.add(panel);
+    // tall sign tower at the back corner (the "Car Town" totem from the original)
+    const tower = new THREE.Group();
+    box(tower, 0.5, 4.6, 0.5, mat('#3a3d44', { rough: 0.5, metal: 0.5 }), 0, 0, 0, 0.05);
+    const towerSign = signTexture('tower', 'CAR TOWN', { bg: '#1f4fb6', fg: '#ffd21a', w: 512, h: 256, sub: 'GARAGE · SERVICE · RACING' });
+    const ts = new THREE.Mesh(new THREE.BoxGeometry(2.6, 1.3, 0.25), [mat('#1f4fb6'), mat('#1f4fb6'), mat('#1f4fb6'), mat('#1f4fb6'),
+      new THREE.MeshStandardMaterial({ map: towerSign, emissive: 0xffffff, emissiveMap: towerSign, emissiveIntensity: 0.2 }),
+      new THREE.MeshStandardMaterial({ map: towerSign })]);
+    ts.position.y = 4.9;
+    ts.castShadow = true;
+    tower.add(ts);
+    tower.position.set(-0.9, 0, -0.9);
+    tower.rotation.y = -Math.PI / 4;
+    g.add(tower);
     // curb along the open front edges
     const curbM = mat('#c9c4b8', { rough: 0.8 });
     box(g, N, 0.06, 0.12, curbM, N / 2, 0, N - 0.02, 0.02);

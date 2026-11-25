@@ -114,7 +114,7 @@ database lives in tmpfs. To copy snapshots off-host, mount a directory at
 
 | Area | Features |
 | --- | --- |
-| **My Garage** | Isometric garage with posters, red service lifts, a corner billboard, a crossroads with traffic and friends' cars parked outside. |
+| **My Garage** | Isometric garage with posters, red service lifts, a back-wall billboard, a crossroads with traffic and friends' cars parked outside. |
 | **Customers** | NPC cars arrive, park and request oil, tires, brakes, tuning, washing, waxing or repainting. Each service uses fuel and pays coins, XP and Luxury Point tips. |
 | **Jobs** | Two real-time customer errands and one workshop slot that installs the next upgrade at a discount. |
 | **Buy Cars** | Showroom with 21 vehicles, stats and a colour choice before purchase. |

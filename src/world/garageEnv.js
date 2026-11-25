@@ -1,6 +1,6 @@
 // Static surroundings of the player's garage lot: grass, the two streets that
 // meet at the front corner (as in the original game), sidewalks, crosswalks,
-// trees, lamps, the corner billboard and neighbouring buildings.
+// trees, lamps, the back-wall billboard and neighbouring buildings.
 
 import * as THREE from 'three';
 import { grassTexture, asphaltTexture, sidewalkTexture, windowsTexture, signTexture } from './textures.js';
@@ -194,11 +194,10 @@ export function buildGarageEnvironment(N, friends = []) {
     root.add(l);
   }
 
-  // Billboard on the front corner (like the screenshot)
   const bb = billboard();
-  bb.position.set(N + 0.6, 0, N + 0.6);
-  bb.rotation.y = Math.PI / 4;
-  bb.scale.setScalar(0.8);
+  bb.position.set(Math.min(N * 0.3, 4.8), 0, 0.02);
+  bb.rotation.y = 0;
+  bb.scale.setScalar(1);
   root.add(bb);
 
   const hy = hydrant();
