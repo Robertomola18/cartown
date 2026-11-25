@@ -1,22 +1,66 @@
-# Car Town — remake
+# Car Town — remake 3D
 
 [English](README.en.md) · [Español](README.md) · **Português (Brasil)**
 
-Car Town é um remake 3D para navegador do clássico jogo social de garagem, criado com [three.js](https://threejs.org). Gerencie sua própria oficina, atenda clientes, ganhe moedas e experiência, compre e personalize carros, decore e amplie o terreno, dirija pela cidade e dispute corridas de quarto de milha.
+Car Town é um remake 3D para navegador do clássico jogo social de garagem, criado com [three.js](https://threejs.org). É um projeto fã, não oficial e sem fins comerciais: todos os modelos, texturas e sons são gerados por código.
 
-O projeto inclui contas próprias, saves por usuário, amigos, mural, desafios, visitas e classificação global. Não é um projeto oficial nem tem fins comerciais.
+Gerencie sua oficina, atenda clientes, compre e ajuste carros, decore e amplie a garagem, dirija por uma cidade viva, dispute corridas de um quarto de milha e compartilhe o progresso com amigos.
 
 ## Capturas do jogo
 
-As imagens abaixo comparam o jogo com o original e mostram os carros recriados a partir das fotos de referência.
+As imagens abaixo são capturas do jogo comparadas com o original e com as fotos de referência usadas para modelar os carros.
 
-| Garagem comparada com o original | Primeiro lote de carros |
+| Garagem do jogo comparada com o original | Primeiro lote de carros |
 | --- | --- |
 | ![Garagem do jogo comparada com o original](docs/garage-vs-screenshot.jpg) | ![Carros do jogo comparados com as fotos](docs/cars-vs-photos.jpg) |
 
 | Segundo lote de carros | Detalhe do Opel Frontera |
 | --- | --- |
 | ![Segundo lote de carros comparado com as fotos](docs/cars-vs-photos-2.jpg) | ![Opel Frontera do jogo comparado com a foto](docs/frontera-vs-photo.jpg) |
+
+## Um passeio pelo jogo
+
+1. **Abra sua garagem.** Escolha o idioma, siga o tutorial e acompanhe o HUD: dinheiro, experiência, nível, combustível, trabalhos e menu principal.
+2. **Atenda clientes.** Carros NPC chegam e pedem óleo, pneus, freios, ajuste, lavagem, cera ou repintura. Cada serviço consome recursos e rende moedas, experiência e gorjetas.
+3. **Use a oficina.** Aceite até duas tarefas em tempo real e reserve a vaga de melhoria para instalar a próxima peça com desconto.
+4. **Compre e prepare carros.** A concessionária mostra 21 veículos com estatísticas e cor inicial. Depois é possível mudar acabamento, teto bicolor, rodas, adesivos, spoilers, película, suspensão, luzes e mecânica.
+5. **Decore a garagem.** Compre, coloque, mova, gire e venda elevadores, lava-jato, cabine de pintura, fliperama, jukebox, mesas, ferramentas, tapetes e baldosas. Há temas de piso e parede e ampliação do terreno.
+6. **Dirija pela cidade.** Visite a concessionária, pintura, pista, posto, lava-jato, sua garagem e casas de amigos. A cidade tem ruas, calçadas elevadas, faixas de pedestres, parques, mobiliário, tráfego, pedestres e minimapa.
+7. **Corra o quarto de milha.** Largada com semáforo, acelerar, trocar de marcha na zona verde e nitro. Compita contra IA, amigos NPC, adversários online ou um segundo jogador no mesmo teclado.
+8. **Faça amigos.** Adicione usuários por nome ou código, publique no mural, curta publicações, envie desafios, visite oficinas alheias em modo somente leitura e suba no ranking global.
+
+## O que o jogo inclui
+
+| Área | Recursos |
+| --- | --- |
+| **Minha garagem** | Garagem isométrica com pôsteres, elevadores vermelhos, letreiro na parede, cordão de veludo, cruzamento com tráfego, carros de amigos estacionados do lado de fora e editor de objetos. |
+| **Clientes** | Carros NPC pedem óleo, pneus, freios, ajuste, lavagem, cera e repintura. Cada serviço consome combustível e rende moedas, experiência e gorjetas. |
+| **Trabalhos** | Até duas tarefas em tempo real, progresso persistente e uma vaga na oficina para instalar a próxima melhoria com desconto. |
+| **Comprar carros** | Concessionária com 21 veículos, estatísticas, oito modelos em destaque e escolha de cor antes da compra. |
+| **Pintura e tuning** | Acabamentos, teto bicolor, 13 desenhos de rodas, adesivos, spoilers, película, suspensão, underglow e melhorias mecânicas. |
+| **Editar garagem** | Compre, coloque, mova, gire e venda elevadores, lava-jato, cabine de pintura, fliperama, jukebox, mesas, ferramentas e baldosas. Inclui temas de piso e parede, ampliação e ferramentas que se encaixam em mesas. |
+| **Cidade** | Ruas, calçadas elevadas, faixas de pedestres, postes alinhados, áreas verdes, mobiliário, tráfego, pedestres e minimapa. Entre na concessionária, pintura, pista, posto, lava-jato, garagem e casas de amigos. |
+| **Corridas** | Largada com semáforo, acelerar, trocar de marcha na zona verde e nitro. Corridas de um quarto de milha contra IA, amigos NPC, adversários online ou um segundo jogador no mesmo teclado. |
+| **Social** | Amigos por nome ou código, mural, curtidas, desafios, visitas somente leitura e ranking global. |
+| **Tutorial e acessibilidade** | Tutorial guiado em espanhol, inglês e português, com etapas persistentes, eventos identificados, avisos acessíveis e repetição em Ajustes. |
+| **Som** | Efeitos e música sintetizados por código; não há arquivos de áudio externos. |
+
+## Controles
+
+| Área | Teclas |
+| --- | --- |
+| Garagem | Arraste para mover; roda ou `+`/`−` para zoom. No editor, `R` gira e `Esc` cancela. |
+| Concessionária | Use o HUD para comparar carros, escolher cor e comprar. |
+| Corrida individual | `Espaço` ou clique para acelerar e trocar de marcha; `N` ativa o nitro. |
+| Corrida para dois jogadores | P1: `Z` acelera/troca, `X` nitro. P2: `M` acelera/troca, `N` nitro. |
+| Cidade | `WASD` ou setas para dirigir, `Espaço` freia, `E` entra, `C` muda a câmera, `H` buzina e `Esc` volta à garagem. |
+
+## Saves e progresso
+
+- Cada usuário tem um save independente armazenado em SQLite.
+- O banco ativo fica em memória e é persistido por snapshots automáticos; os trabalhos continuam andando com o jogo fechado.
+- Na primeira visita é possível escolher espanhol, inglês ou português do Brasil; o tutorial pode ser repetido em Ajustes.
+- As contas são locais nesta instalação: nome de usuário e senha, sem e-mail. As senhas usam scrypt e as sessões ficam no servidor.
 
 ## Início rápido
 
@@ -30,7 +74,7 @@ npm start
 
 Abra `http://localhost:3000/cartown/login`.
 
-Para desenvolvimento com recarga automática, execute `npm start` em um terminal e `npm run dev` em outro. O Vite escuta em `:5173` e redireciona a API para o servidor Node em `:3000`.
+Para recarga automática, execute `npm start` em um terminal e `npm run dev` em outro. O Vite escuta em `:5173` e redireciona a API para o servidor Node em `:3000`.
 
 ```bash
 npm start
@@ -38,8 +82,6 @@ npm run dev
 ```
 
 ## Contas e administração
-
-As contas são locais nesta instalação: nome de usuário e senha, sem e-mail. A primeira visita redireciona para o login; o registro está aberto por padrão. As senhas são armazenadas com scrypt e as sessões ficam no servidor.
 
 ```bash
 node server/admin.js ensure-owner SEU_USUARIO SUA_SENHA
@@ -50,7 +92,7 @@ node server/admin.js ranking-opt-out SEU_USUARIO
 node server/admin.js audit 40
 ```
 
-O painel administrativo fica em `/cartown/admin` após entrar com uma conta de administrador. Ele permite banir ou desbanir contas, reiniciar saves ou senhas, ajustar nível e dinheiro, forçar o tutorial, gerenciar a visibilidade na classificação e excluir contas.
+O painel administrativo fica em `/cartown/admin` após entrar com uma conta de administrador. Ele permite banir ou desbanir contas, reiniciar saves ou senhas, ajustar nível e dinheiro, forçar o tutorial, gerenciar a visibilidade no ranking e excluir contas.
 
 ## Configuração
 
@@ -64,11 +106,11 @@ O painel administrativo fica em `/cartown/admin` após entrar com uma conta de a
 | `CARTON_SNAPSHOT_MINUTES` | `5` | Intervalo entre snapshots. |
 | `CARTON_REGISTRATION` | `open` | `closed` desativa novos registros. |
 | `CARTON_INVITE_CODE` | vazio | Exige um código de convite enquanto o registro está aberto. |
+| `CARTON_SESSION_DAYS` | `30` | Duração das sessões. |
 | `CARTON_TRUST_PROXY` | `0` | Use `1` atrás de um proxy reverso. |
 | `CARTON_COOKIE_SECURE` | `0` | Use `1` quando o TLS termina no proxy. |
+| `CARTON_MAX_STATE_BYTES` | `2097152` | Tamanho máximo aceito para um save. |
 | `CARTON_NAS_DIR` | `<data>/nas` | Diretório opcional para cópias de snapshots. |
-
-O progresso é salvo por usuário em SQLite, em memória com snapshots. Os trabalhos continuam avançando com o jogo fechado. Na primeira visita é possível escolher espanhol, inglês ou português do Brasil; o tutorial pode ser repetido em Ajustes.
 
 ## Docker e proxy reverso
 
@@ -90,30 +132,6 @@ location /cartown/ {
 ```
 
 Quando o proxy cuidar de HTTPS, ative `CARTON_TRUST_PROXY=1` e `CARTON_COOKIE_SECURE=1`. Os dados persistentes ficam no volume `cartown_data`; o banco SQLite ativo fica em tmpfs. Para copiar snapshots para fora do servidor, monte um diretório em `/nas` e defina `CARTON_NAS_DIR=/nas`.
-
-## O que o jogo inclui
-
-| Área | Recursos |
-| --- | --- |
-| **Minha garagem** | Garagem isométrica com pôsteres, elevadores vermelhos, letreiro, cruzamento com tráfego e carros de amigos estacionados do lado de fora. |
-| **Clientes** | Carros NPC chegam, estacionam e pedem óleo, pneus, freios, ajuste, lavagem, cera ou repintura. Cada serviço consome combustível e rende moedas, experiência e gorjetas. |
-| **Trabalhos** | Até duas tarefas em tempo real e uma vaga na oficina para instalar a próxima melhoria com desconto. |
-| **Comprar carros** | Concessionária com 21 veículos, estatísticas e escolha de cor antes da compra. |
-| **Pintura e tuning** | Acabamentos, teto bicolor, 13 desenhos de rodas, adesivos, spoilers, película, suspensão, luzes e melhorias mecânicas. |
-| **Editar garagem** | Compre, coloque, mova, gire e venda elevadores, lava-jato, cabine de pintura, fliperama, jukebox, mesas e muito mais. Inclui temas de piso e parede e ampliação do terreno. |
-| **Corridas** | Largada com semáforo, acelerar, trocar de marcha na zona verde e nitro. Corridas de quarto de milha contra IA, amigos NPC, adversários online ou um segundo jogador no mesmo teclado. |
-| **Cidade** | Dirija até a concessionária, pintura, pista, posto, lava-jato, sua garagem e casas de amigos, com tráfego, pedestres e minimapa. |
-| **Social** | Amigos por nome ou código, mural, curtidas, desafios, visitas somente leitura e classificação global. |
-| **Outros** | Espanhol, inglês e português, tutorial guiado e sons gerados por código. |
-
-## Controles
-
-| Área | Teclas |
-| --- | --- |
-| Garagem | Arraste para mover; roda ou `+`/`−` para zoom. No editor, `R` gira e `Esc` cancela. |
-| Corrida individual | `Espaço` ou clique para acelerar e trocar de marcha; `N` ativa o nitro. |
-| Corrida para dois jogadores | P1: `Z` acelera/troca, `X` nitro. P2: `M` acelera/troca, `N` nitro. |
-| Cidade | `WASD` ou setas para dirigir, `Espaço` freia, `E` entra, `C` muda a câmera, `H` buzina e `Esc` volta à garagem. |
 
 ## Como os carros são modelados
 
@@ -147,4 +165,4 @@ Para mais detalhes do jogo, consulte [`JUEGO.md`](JUEGO.md) e, em espanhol, [`PR
 
 ## Aviso legal
 
-Este projeto é fan-made, não comercial e não está afiliado à Cie Games, Glu nem ao Car Town original. Os nomes de marcas e modelos são usados apenas para identificar os carros recriados. Todos os modelos, texturas e sons deste repositório são gerados por código.
+Este projeto é fã, não comercial e não está afiliado à Cie Games, Glu nem ao Car Town original. Os nomes de marcas e modelos são usados apenas para identificar os carros recriados. Todos os modelos, texturas e sons deste repositório são gerados por código.

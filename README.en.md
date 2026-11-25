@@ -1,26 +1,89 @@
-# Car Town — remake
+# Car Town — 3D remake
 
 **English** · [Español](README.md) · [Português (Brasil)](README.pt.md)
 
 Car Town is a 3D browser remake of the classic social garage game, built with
-[three.js](https://threejs.org). Run your own garage, service NPC customers for
-coins and XP, buy and customize cars, decorate and expand your lot, drive around
-town, and race other players over a quarter mile. The project also includes
-accounts, per-user saves, friends, a wall, challenges, visits and a global
-ranking. It is an unofficial, non-commercial fan project.
+[three.js](https://threejs.org). It is an unofficial, non-commercial fan
+project: every model, texture and sound is generated in code.
 
-## Screenshots
+Run your own workshop, service NPC customers, buy and tune cars, decorate and
+expand your garage, drive around a living town, race over a quarter mile and
+share progress with friends.
 
-These comparison images show the in-game garage and the cars recreated from the
-reference photos.
+## In-game screenshots
 
-| Garage vs. original | First car batch |
+These images are in-game captures compared with the original game and with the
+reference photos used to model the cars.
+
+| In-game garage vs. original | First car batch |
 | --- | --- |
 | ![In-game garage compared with the original](docs/garage-vs-screenshot.jpg) | ![In-game cars compared with reference photos](docs/cars-vs-photos.jpg) |
 
 | Second car batch | Opel Frontera detail |
 | --- | --- |
 | ![Second car batch compared with reference photos](docs/cars-vs-photos-2.jpg) | ![In-game Opel Frontera compared with its reference photo](docs/frontera-vs-photo.jpg) |
+
+## A tour of the game
+
+1. **Open your garage.** Pick a language, follow the tutorial and read the HUD:
+   money, XP, level, fuel, jobs and main menu.
+2. **Serve customers.** NPC cars arrive and request oil, tires, brakes,
+   tuning, washing, waxing or repainting. Each job uses resources and pays
+   coins, XP and tips.
+3. **Run the workshop.** Accept up to two real-time errands and reserve the
+   upgrade slot to install the next part at a discount.
+4. **Buy and prepare cars.** The dealer shows 21 vehicles with stats and an
+   initial colour. Then change the finish, two-tone roof, wheels, liveries,
+   spoilers, tint, suspension, lights and mechanical parts.
+5. **Decorate the garage.** Buy, place, move, rotate and sell lifts, wash bays,
+   paint booths, arcade machines, jukeboxes, tables, tools, rugs and tiles.
+   Floor/wall themes and lot expansions are included.
+6. **Drive into town.** Visit the dealer, paint shop, drag strip, gas station,
+   car wash, your garage and friends' houses. The town has streets, raised
+   sidewalks, crosswalks, parks, street furniture, traffic, pedestrians and a
+   minimap.
+7. **Race the quarter mile.** Staged start, revving, shifting in the green zone
+   and nitro. Race AI, NPC friends, online rivals or a second player on the
+   same keyboard.
+8. **Make friends.** Add users by name or code, post on the wall, like posts,
+   send challenges, visit friends in read-only mode and climb the global
+   ranking.
+
+## What's in the game
+
+| Area | Features |
+| --- | --- |
+| **My Garage** | Isometric garage with posters, red service lifts, a back-wall billboard, a velvet rope, a crossroads with traffic, friends' cars parked outside and an object editor. |
+| **Customers** | NPC cars request oil, tires, brakes, tuning, washing, waxing and repainting. Each service uses fuel and pays coins, XP and tips. |
+| **Jobs** | Two real-time customer errands, persistent progress and one workshop slot that installs the next upgrade at a discount. |
+| **Buy Cars** | Dealer with 21 vehicles, stats, eight featured models and a colour choice before purchase. |
+| **Paint & Tune** | Finishes, two-tone roof, 13 wheel designs, liveries, spoilers, tint, stance, underglow and mechanical upgrades. |
+| **Edit Garage** | Buy, place, move, rotate and sell lifts, wash bays, paint booths, arcades, jukeboxes, tables, tools and tiles. Includes floor/wall themes, lot expansions and tools that snap to tables. |
+| **Town** | Streets, raised sidewalks, crosswalks, aligned lamps, green areas, furniture, traffic, pedestrians and a minimap. Enter the dealer, paint shop, drag strip, gas station, car wash, garage and friends' houses. |
+| **Drag races** | Staged start, revving, shifting in the green zone and nitro. Race AI, NPC friends, online players or a second player on the same keyboard. |
+| **Social** | Add friends by username or code, post on the wall, like posts, send challenges, visit friends in read-only mode and use the global ranking. |
+| **Tutorial & accessibility** | Guided tutorial in Spanish, English and Brazilian Portuguese, with persistent steps, identified events, accessible notices and a replay option in Settings. |
+| **Sound** | Effects and music are synthesised in code; there are no external audio files. |
+
+## Controls
+
+| Where | Controls |
+| --- | --- |
+| Garage | Drag to pan; wheel or `+`/`−` to zoom. In the editor, `R` rotates and `Esc` cancels. |
+| Dealer | Use the HUD to compare cars, choose a colour and buy. |
+| Solo race | `Space` or click to rev and shift; `N` fires nitro. |
+| Two-player race | P1: `Z` rev/shift, `X` nitro. P2: `M` rev/shift, `N` nitro. |
+| Town | `WASD` or arrows to drive, `Space` to brake, `E` to enter, `C` to change camera, `H` for the horn and `Esc` to return to the garage. |
+
+## Saves and progress
+
+- Each user has an independent save stored in SQLite.
+- The live database is kept in memory and persisted through automatic
+  snapshots; jobs keep running while the game is closed.
+- The first visit lets you choose Spanish, English or Brazilian Portuguese;
+  the tutorial can be restarted from Settings.
+- Accounts are local to this installation: username and password, no email.
+  Passwords are hashed with scrypt and sessions are stored server-side.
 
 ## Quick start
 
@@ -36,9 +99,8 @@ npm start
 
 Open `http://localhost:3000/cartown/login`.
 
-For development with hot reload, run `npm start` in one terminal and
-`npm run dev` in another. Vite listens on `:5173` and proxies API requests to
-the Node server on `:3000`.
+For hot reload, run `npm start` in one terminal and `npm run dev` in another.
+Vite listens on `:5173` and proxies API requests to the Node server on `:3000`.
 
 ```bash
 npm start
@@ -46,10 +108,6 @@ npm run dev
 ```
 
 ## Accounts and administration
-
-Accounts are local to this installation: username and password, no email. The
-first visit redirects to the login page; registration is open by default.
-Passwords are hashed with scrypt and sessions are stored server-side.
 
 ```bash
 node server/admin.js ensure-owner YOUR_USER YOUR_PASSWORD
@@ -76,13 +134,11 @@ and money, force the tutorial, manage ranking visibility and delete accounts.
 | `CARTON_SNAPSHOT_MINUTES` | `5` | Snapshot interval. |
 | `CARTON_REGISTRATION` | `open` | Set to `closed` to disable signups. |
 | `CARTON_INVITE_CODE` | empty | Require an invite code while registration is open. |
+| `CARTON_SESSION_DAYS` | `30` | Session lifetime. |
 | `CARTON_TRUST_PROXY` | `0` | Set to `1` behind a reverse proxy. |
 | `CARTON_COOKIE_SECURE` | `0` | Set to `1` when TLS terminates at the proxy. |
+| `CARTON_MAX_STATE_BYTES` | `2097152` | Maximum accepted save size. |
 | `CARTON_NAS_DIR` | `<data>/nas` | Optional snapshot copy directory. |
-
-Progress is stored per user in SQLite, in RAM with snapshots. Jobs keep running
-while the game is closed. The first visit lets you choose Spanish, English or
-Brazilian Portuguese; the tutorial can be restarted from Settings.
 
 ## Docker and reverse proxy
 
@@ -109,30 +165,6 @@ Set `CARTON_TRUST_PROXY=1` and `CARTON_COOKIE_SECURE=1` when the proxy handles
 HTTPS. Persistent data lives in the `cartown_data` volume; the live SQLite
 database lives in tmpfs. To copy snapshots off-host, mount a directory at
 `/nas` and set `CARTON_NAS_DIR=/nas`.
-
-## What's in the game
-
-| Area | Features |
-| --- | --- |
-| **My Garage** | Isometric garage with posters, red service lifts, a back-wall billboard, a crossroads with traffic and friends' cars parked outside. |
-| **Customers** | NPC cars arrive, park and request oil, tires, brakes, tuning, washing, waxing or repainting. Each service uses fuel and pays coins, XP and Luxury Point tips. |
-| **Jobs** | Two real-time customer errands and one workshop slot that installs the next upgrade at a discount. |
-| **Buy Cars** | Showroom with 21 vehicles, stats and a colour choice before purchase. |
-| **Paint & Tune** | Finishes, two-tone roof, 13 rim designs, liveries, spoilers, tint, stance, underglow and mechanical upgrades. |
-| **Edit Garage** | Buy, place, move, rotate and sell lifts, wash bays, paint booths, arcade machines, jukeboxes, tables and more. Includes floor/wall themes and lot expansions. |
-| **Drag races** | Staged start, revving, shifting in the green zone and nitro. Race AI, NPC friends, online players or a second player on the same keyboard. |
-| **Town** | Drive to the dealer, paint shop, drag strip, gas station, car wash, your garage and friends' houses, with traffic, pedestrians and a minimap. |
-| **Social** | Add friends by username or code, post on the wall, like posts, send challenges, visit friends in read-only mode and use the global ranking. |
-| **Other** | Spanish, English and Brazilian Portuguese, a guided tutorial, and code-generated sound effects and music. |
-
-## Controls
-
-| Where | Keys |
-| --- | --- |
-| Garage | Drag to pan; wheel or `+`/`−` to zoom. In the editor, `R` rotates and `Esc` cancels. |
-| Solo race | `Space` or click to rev and shift; `N` fires nitro. |
-| Two-player race | P1: `Z` rev/shift, `X` nitro. P2: `M` rev/shift, `N` nitro. |
-| Town | `WASD` or arrows to drive, `Space` to brake, `E` to enter, `C` to change camera, `H` for the horn and `Esc` to return to the garage. |
 
 ## How cars are modelled
 

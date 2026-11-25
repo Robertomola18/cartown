@@ -1,22 +1,66 @@
-# Car Town — remake
+# Car Town — remake 3D
 
 [English](README.en.md) · [Português (Brasil)](README.pt.md) · **Español**
 
-Car Town es un remake 3D para navegador del clásico juego social de garaje, creado con [three.js](https://threejs.org). Gestiona tu propio taller, atiende clientes, gana monedas y experiencia, compra y personaliza coches, decora y amplía tu garaje, conduce por el pueblo y compite en carreras de cuarto de milla.
+Car Town es un remake 3D para navegador del clásico juego social de garaje, creado con [three.js](https://threejs.org). No es un proyecto oficial ni comercial: es una reconstrucción hecha a mano con modelos, texturas y sonidos generados por código.
 
-El proyecto incluye cuentas propias, partidas por usuario, amigos, muro, retos, visitas y clasificación global. No es un proyecto oficial ni tiene fines comerciales.
+Gestiona tu oficina, atiende clientes, compra y tunea coches, decora y amplía tu garaje, conduce por una ciudad con tráfico y peatones, compite en carreras de cuarto de milla y comparte progreso con amigos.
 
 ## Capturas del juego
 
-Las imágenes siguiente comparan el juego con el original y muestran los coches recreados a partir de las fotos de referencia.
+Las imágenes son capturas del juego enfrentadas al original y a las fotos de referencia usadas para modelar los coches.
 
-| Garaje comparado con el original | Primera tanda de coches |
+| Garaje del juego frente al original | Primera tanda de coches |
 | --- | --- |
 | ![Garaje del juego comparado con el original](docs/garage-vs-screenshot.jpg) | ![Coches del juego comparados con las fotos](docs/cars-vs-photos.jpg) |
 
 | Segunda tanda de coches | Detalle del Opel Frontera |
 | --- | --- |
 | ![Segunda tanda de coches comparada con las fotos](docs/cars-vs-photos-2.jpg) | ![Opel Frontera del juego comparado con la foto](docs/frontera-vs-photo.jpg) |
+
+## Una vuelta por el juego
+
+1. **Entra en tu garaje.** Elige idioma, sigue el tutorial y revisa el HUD: dinero, experiencia, nivel, combustible, trabajos y menú principal.
+2. **Atiende clientes.** Llegan coches NPC, aparcan y piden aceite, neumáticos, frenos, puesta a punto, lavado, encerado o repintado. Cada trabajo consume recursos y paga monedas, XP y propinas.
+3. **Usa el taller.** Acepta hasta dos encargos que avanzan en tiempo real y reserva el hueco de mejora para instalar la próxima pieza con descuento.
+4. **Compra y prepara coches.** El concesionario muestra 21 vehículos con estadísticas y color inicial. Después puedes cambiar acabado, techo bicolor, llantas, vinilos, alerones, cristales, suspensión, luces y mecánica.
+5. **Decora el garaje.** Coloca, mueve, gira y vende elevadores, lavadero, cabina de pintura, arcade, jukebox, mesas, herramientas, alfombras, baldosas y mucho más. Hay temas de suelo y pared y ampliaciones del solar.
+6. **Sal a la ciudad.** Conduce por el concesionario, taller, pista, gasolinera, lavadero, tu garaje y casas de amigos. La ciudad tiene calles, aceras, pasos de peatones, parques, mobiliario, tráfico, peatones y minimapa.
+7. **Corre el cuarto de milla.** Salida con semáforo, revolucionar, cambiar en la zona verde y nitro. Compite contra IA, amigos NPC, rivales en línea o un segundo jugador en el mismo teclado.
+8. **Haz amigos.** Añade usuarios por nombre o código, publica en el muro, da me gusta, envía retos, visita talleres ajenos en modo solo lectura y sube en la clasificación global.
+
+## Qué incluye
+
+| Área | Características |
+| --- | --- |
+| **Mi garaje** | Garaje isométrico con pósters, elevadores rojos, cartel de pared, barrera de terciopelo, cruce con tráfico, coches de amigos aparcados fuera y editor de objetos. |
+| **Clientes** | Coches NPC con peticiones de aceite, neumáticos, frenos, tuning, lavado, encerado y repintado. Cada servicio consume combustible y entrega monedas, experiencia y propinas. |
+| **Trabajos** | Hasta dos encargos en tiempo real, progreso persistent y un hueco de taller para instalar mejoras a precio reducido. |
+| **Comprar coches** | Concesionario con 21 vehículos, estadísticas, ocho modelos destacados y elección de color antes de la compra. |
+| **Pintar y tuning** | Acabados, techo bicolor, 13 diseños de llantas, vinilos, alerones, cristales, suspensión, underglow y mejoras mecánicas. |
+| **Editar garaje** | Compra, coloca, mueve, gira y vende elevadores, lavadero, cabina de pintura, arcade, jukebox, mesas, herramientas y baldosas. Incluye temas de suelo y pared, ampliaciones y anclaje de herramientas a mesas. |
+| **Pueblo** | Ciudad con calles, aceras elevadas, pasos de peatones, farolas, zonas verdes, mobiliario, tráfico, peatones y minimapa. Entra en concesionario, pintura, pista, gasolinera, lavadero, garaje y casas de amigos. |
+| **Carreras** | Salida con semáforo, revolucionar, cambiar en la zona verde y nitro. Carreras de cuarto de milla contra IA, amigos NPC, rivales en línea o un segundo jugador en el mismo teclado. |
+| **Social** | Amigos por nombre de usuario o código, muro, me gusta, retos, visitas de solo lectura y clasificación global. |
+| **Tutorial y accesibilidad** | Tutorial guiado en español, inglés y portugués, con pasos persistentes, eventos identificados, avisos accesibles y repetición desde Ajustes. |
+| **Sonido** | Efectos y música sintetizados por código; no hay archivos de audio externos. |
+
+## Controles
+
+| Zona | Controles |
+| --- | --- |
+| Garaje | Arrastra para mover, rueda o `+`/`−` para acercar. En el editor, `R` gira y `Esc` cancela. |
+| Concesionario | Usa el HUD para comparar coches, elegir color y comprar. |
+| Carrera en solitario | `Espacio` o clic para revolucionar y cambiar; `N` activa el nitro. |
+| Carrera a dos jugadores | P1: `Z` revoluciona/cambia y `X` nitro. P2: `M` revoluciona/cambia y `N` nitro. |
+| Pueblo | `WASD` o flechas para conducir, `Espacio` frena, `E` entra, `C` cambia la cámara, `H` toca el claxon y `Esc` vuelve al garaje. |
+
+## Guardado y partidas
+
+- Cada usuario tiene su propia partida en SQLite.
+- La base en vivo se mantiene en memoria y se guarda mediante snapshots automáticos; los trabajos siguen avanzando aunque el juego esté cerrado.
+- El primer inicio permite elegir español, inglés o portugués de Brasil. El tutorial puede repetirse desde Ajustes.
+- Las cuentas son locales a la instalación: nombre de usuario y contraseña, sin correo electrónico. Las contraseñas usan scrypt y las sesiones se guardan en el servidor.
 
 ## Inicio rápido
 
@@ -38,8 +82,6 @@ npm run dev
 ```
 
 ## Cuentas y administración
-
-Las cuentas son locales a esta instalación: nombre de usuario y contraseña, sin correo electrónico. La primera visita redirige al inicio de sesión; el registro está abierto por defecto. Las contraseñas se almacenan con scrypt y las sesiones se guardan en el servidor.
 
 ```bash
 node server/admin.js ensure-owner TU_USUARIO TU_CONTRASEÑA
@@ -64,11 +106,11 @@ El panel web de administración está en `/cartown/admin` después de iniciar se
 | `CARTON_SNAPSHOT_MINUTES` | `5` | Intervalo entre snapshots. |
 | `CARTON_REGISTRATION` | `open` | `closed` desactiva los registros. |
 | `CARTON_INVITE_CODE` | vacío | Solicita un código de invitación si el registro está abierto. |
+| `CARTON_SESSION_DAYS` | `30` | Duración de las sesiones. |
 | `CARTON_TRUST_PROXY` | `0` | Usa `1` detrás de un proxy inverso. |
 | `CARTON_COOKIE_SECURE` | `0` | Usa `1` cuando TLS termina en el proxy. |
+| `CARTON_MAX_STATE_BYTES` | `2097152` | Tamaño máximo aceptado de una partida guardada. |
 | `CARTON_NAS_DIR` | `<data>/nas` | Directorio opcional para copias de snapshots. |
-
-El progreso se guarda por usuario en SQLite, en memoria y con snapshots. Los trabajos siguen avanzando aunque el juego esté cerrado. El primer inicio permite elegir español, inglés o portugués de Brasil; el tutorial puede repetirse desde Ajustes.
 
 ## Docker y proxy inverso
 
@@ -90,30 +132,6 @@ location /cartown/ {
 ```
 
 Cuando el proxy gestione HTTPS, activa `CARTON_TRUST_PROXY=1` y `CARTON_COOKIE_SECURE=1`. Los datos persistentes están en el volumen `cartown_data`; la base de datos en vivo está en tmpfs. Para copiar snapshots fuera del servidor, monta un directorio en `/nas` y define `CARTON_NAS_DIR=/nas`.
-
-## Qué incluye
-
-| Área | Características |
-| --- | --- |
-| **Mi garaje** | Garaje isométrico con pósters, elevadores rojos, cartel, cruce con tráfico y coches de amigos aparcados fuera. |
-| **Clientes** | Coches NPC llegan, aparcan y piden aceite, neumáticos, frenos, puesta a punto, lavado, encerado o repintado. Cada servicio consume combustible y entrega monedas, experiencia y propinas. |
-| **Trabajos** | Hasta dos encargos que avanzan en tiempo real y un hueco de taller para instalar mejoras a precio reducido. |
-| **Comprar coches** | Concesionario con 21 vehículos, estadísticas y elección de color. |
-| **Pintar y tuning** | Acabados, techo bicolor, 13 diseños de llantas, vinilos, alerones, cristales, suspensión, luces y mejoras mecánicas. |
-| **Editar garaje** | Compra, coloca, mueve, gira y vende elevadores, lavadero, cabina de pintura, arcade, jukebox, mesas y mucho más. Incluye temas de suelo y paredes y ampliaciones del solar. |
-| **Carreras** | Salida con semáforo, revolucionar, cambiar en la zona verde y nitro. Carreras de cuarto de milla contra IA, amigos NPC, rivales en línea o un segundo jugador en el mismo teclado. |
-| **Pueblo** | Conduce por el concesionario, taller, circuito, gasolinera, lavadero, tu garaje y casas de amigos, con tráfico, peatones y minimapa. |
-| **Social** | Amigos por nombre de usuario o código, muro, me gusta, retos, visitas de solo lectura y clasificación global. |
-| **Otros** | Español, inglés y portugués, tutorial guiado y sonidos generados por código. |
-
-## Controles
-
-| Zona | Controles |
-| --- | --- |
-| Garaje | Arrastra para mover, rueda o `+`/`−` para acercar. En el editor, `R` gira y `Esc` cancela. |
-| Carrera en solitario | `Espacio` o clic para revolucionar y cambiar; `N` activa el nitro. |
-| Carrera a dos jugadores | P1: `Z` revoluciona/cambia y `X` nitro. P2: `M` revoluciona/cambia y `N` nitro. |
-| Pueblo | `WASD` o flechas para conducir, `Espacio` frena, `E` entra, `C` cambia la cámara, `H` toca el claxon y `Esc` vuelve al garaje. |
 
 ## Cómo se modelan los coches
 

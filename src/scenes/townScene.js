@@ -7,8 +7,8 @@ import { createCar, defaultConfig } from '../cars/carFactory.js';
 import { NPC_MODEL_IDS, FEATURED_IDS } from '../cars/models.js';
 import { carPerformance } from '../game/drag.js';
 import { PAINT_COLORS, NPC_FRIENDS } from '../game/catalog.js';
-import { grassTexture, asphaltTexture, sidewalkTexture, windowsTexture, signTexture, canvasTexture } from '../world/textures.js';
-import { mat, box, cylinder, tree, bush, lampPost, bench, glowDisc } from '../world/props.js';
+import { grassTexture, darkAsphaltTexture, sidewalkTexture, windowsTexture, signTexture, canvasTexture } from '../world/textures.js';
+import { mat, box, cylinder, tree, bush, hedge, lampPost, bench, hydrant, trashCan, glowDisc } from '../world/props.js';
 import { buildAvatar, animateAvatar } from '../world/characters.js';
 import { headingOf } from '../world/mover.js';
 import { clamp, damp, pick, seeded, rand } from '../core/util.js';
@@ -77,7 +77,7 @@ export class TownScene {
     s.add(grass);
 
     // Roads along both axes at every block boundary
-    const asphalt = asphaltTexture();
+    const asphalt = darkAsphaltTexture();
     const total = SIZE + ROAD_W;
     for (let i = 0; i <= GRID; i++) {
       const c = i * BLOCK;
@@ -91,7 +91,7 @@ export class TownScene {
     for (let i = 0; i <= GRID; i++) {
       for (let k = -ROAD_W / 2; k < SIZE + ROAD_W / 2; k += 3) {
         const local = ((k % BLOCK) + BLOCK) % BLOCK;
-        if (local < ROAD_W / 2 + 1 || local > BLOCK - ROAD_W / 2 - 1) continue;
+        if (local < ROAD_W / 2 + 4 || local > BLOCK - ROAD_W / 2 - 4) continue;
         dashes.push([k, i * BLOCK, 0], [i * BLOCK, k, Math.PI / 2]);
       }
     }
@@ -105,9 +105,36 @@ export class TownScene {
     });
     s.add(dashMesh);
 
+    const crossGeo = new THREE.PlaneGeometry(0.55, 8.4);
+    const crossM = mat('#f7f4e8', { rough: 0.9 });
+    const crosses = [];
+    for (let i = 0; i <= GRID; i++) {
+      for (let j = 0; j <= GRID; j++) {
+        const cx = i * BLOCK;
+        const cz = j * BLOCK;
+        for (const off of [-1.6, -0.8, 0, 0.8, 1.6]) {
+          if (i < GRID) crosses.push([cx + 7.2 + off, cz, 0]);
+          if (i > 0) crosses.push([cx - 7.2 + off, cz, 0]);
+          if (j < GRID) crosses.push([cx, cz + 7.2 + off, Math.PI / 2]);
+          if (j > 0) crosses.push([cx, cz - 7.2 + off, Math.PI / 2]);
+        }
+      }
+    }
+    const crossMesh = new THREE.InstancedMesh(crossGeo, crossM, crosses.length);
+    crosses.forEach(([x, z, r], idx) => {
+      q.setFromEuler(new THREE.Euler(-Math.PI / 2, 0, r));
+      m4.compose(new THREE.Vector3(x, 0.012, z), q, new THREE.Vector3(1, 1, 1));
+      crossMesh.setMatrixAt(idx, m4);
+    });
+    s.add(crossMesh);
+
     // Blocks: raised sidewalk slab + content
     const side = sidewalkTexture();
     const rng = seeded(2010);
+    const curbGeo = new THREE.BoxGeometry(0.22, 0.1, BLOCK - ROAD_W - 4);
+    const curbM = mat('#f3eddd', { rough: 0.9 });
+    const curbs = new THREE.InstancedMesh(curbGeo, curbM, GRID * GRID * 4);
+    let curbAt = 0;
     for (let bx = 0; bx < GRID; bx++) {
       for (let bz = 0; bz < GRID; bz++) {
         const x0 = bx * BLOCK + ROAD_W / 2;
@@ -119,16 +146,22 @@ export class TownScene {
         s.add(slab);
         const inner = flat(w - 4, w - 4, new THREE.MeshStandardMaterial({ map: rep(grassTexture(), (w - 4) / 6, (w - 4) / 6), roughness: 0.95 }), x0 + w / 2, 0.165, z0 + w / 2);
         s.add(inner);
+        for (const [x, z, ry] of [[x0 + 2, z0 + w / 2, 0], [x0 + w - 2, z0 + w / 2, 0], [x0 + w / 2, z0 + 2, Math.PI / 2], [x0 + w / 2, z0 + w - 2, Math.PI / 2]]) {
+          q.setFromEuler(new THREE.Euler(0, ry, 0));
+          m4.compose(new THREE.Vector3(x, 0.18, z), q, new THREE.Vector3(1, 1, 1));
+          curbs.setMatrixAt(curbAt++, m4);
+        }
         this.buildBlock(bx, bz, x0 + w / 2, z0 + w / 2, w, rng);
         // lamps on corners
-        for (const [cx, cz] of [[x0 + 1, z0 + 1], [x0 + w - 1, z0 + w - 1]]) {
+        for (const [idx, [lx, lz]] of [[x0 + 1, z0 + 1], [x0 + w - 1, z0 + w - 1]].entries()) {
           const l = lampPost();
-          l.position.set(cx, 0.16, cz);
-          l.rotation.y = rng() * 6;
+          l.position.set(lx, 0.16, lz);
+          l.rotation.y = idx ? 0 : Math.PI;
           s.add(l);
         }
       }
     }
+    s.add(curbs);
     // outer ring of trees / hills (clear of the outer road square)
     for (let i = 0; i < 90; i++) {
       const a = (i / 90) * Math.PI * 2;
@@ -172,6 +205,7 @@ export class TownScene {
     body.position.y = h / 2 + 0.16;
     body.castShadow = body.receiveShadow = true;
     g.add(body);
+    box(g, w + 0.1, 0.22, 0.22, mat(roof), 0, h - 0.22, -d / 2 - 0.11, 0.02);
     if (!flatRoof) {
       const r = new THREE.Mesh(new THREE.ConeGeometry(Math.max(w, d) * 0.72, 2.4, 4), mat(roof, { rough: 0.7 }));
       r.rotation.y = Math.PI / 4;
@@ -363,6 +397,53 @@ export class TownScene {
         }
         break;
       }
+    }
+    const x0 = cx - w / 2;
+    const z0 = cz - w / 2;
+    const put = (obj, x, z, y = 0.16, ry = 0) => {
+      obj.position.set(x, y, z);
+      obj.rotation.y = ry;
+      s.add(obj);
+      return obj;
+    };
+    if (key === '1,1') {
+      for (const [x, z, ry] of [[cx - 8, cz, Math.PI / 2], [cx + 8, cz, -Math.PI / 2], [cx, cz - 8, 0], [cx, cz + 8, Math.PI]]) put(bench(), x, z, 0.16, ry);
+      put(trashCan(), cx - 14, cz + 1);
+      put(trashCan(), cx + 14, cz + 1);
+      put(hedge(6, 0.8), cx - 13, cz + 5);
+      put(hedge(6, 0.8), cx + 13, cz - 5);
+      box(s, 9, 0.25, 2, mat('#c2452f'), cx - 10, 3.2, cz + 5, 0.03);
+    } else if (key === '0,1') {
+      put(trashCan(), cx - 11, cz - 9);
+      put(trashCan(), cx + 12, cz - 10);
+      put(hedge(6, 0.7), cx - 9, cz + 12);
+      put(hedge(6, 0.7), cx + 11, cz + 12);
+      this.sign('CITY PARK', cx - 10, 2.5, z0 + 2, Math.PI, { bg: '#2f7a4a', fg: '#fff', key: 'town-park', w: 7, h: 1.3 });
+    } else if (key === '1,0') {
+      put(hedge(7, 0.8), cx - 11, cz - 7);
+      put(hedge(7, 0.8), cx + 11, cz - 7);
+      put(trashCan(), cx - 13, z0 + 2);
+      put(trashCan(), cx + 13, z0 + 2);
+    } else if (key === '2,0') {
+      put(bush(2, 0.7), cx - 10, cz - 6);
+      put(bush(2, 0.7), cx + 2, cz - 6);
+      put(hydrant(), cx + 13, z0 + 2);
+      box(s, 12, 0.25, 2, mat('#c13cc8'), cx, 3.6, cz - 5, 0.03);
+    } else if (key === '2,1') {
+      put(hydrant(), cx - 12, cz - 8);
+      put(trashCan(), cx + 5, cz - 8);
+      put(hedge(8, 0.7), cx - 4, cz + 10);
+    } else if (key === '1,2') {
+      put(hedge(18, 0.7), cx - 5.5, cz + 5, 0.16, Math.PI / 2);
+      put(hedge(18, 0.7), cx + 5.5, cz + 5, 0.16, Math.PI / 2);
+      put(trashCan(), cx - 11, cz - 8);
+    } else if (key === '0,0') {
+      put(hydrant(), x0 + 1, z0 + w - 1);
+      put(trashCan(), x0 + w - 1, z0 + 1);
+    } else {
+      put(hydrant(), x0 + 1, z0 + w - 1);
+      put(trashCan(), x0 + w - 1, z0 + 1);
+      put(hedge(6, 0.6), cx, z0 + w - 3);
     }
   }
 
