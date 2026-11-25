@@ -6,8 +6,10 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 export class Engine {
   constructor(container) {
     this.container = container;
-    const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    this.maxPixelRatio = mobile ? 1.25 : 2;
+    const renderer = new THREE.WebGLRenderer({ antialias: !mobile, preserveDrawingBuffer: true, powerPreference: mobile ? 'default' : 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.maxPixelRatio));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NeutralToneMapping;
     renderer.toneMappingExposure = 1.0;

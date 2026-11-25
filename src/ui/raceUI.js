@@ -76,12 +76,18 @@ export class RaceUI {
     this.myCarId = preset.carId || st.activeCar?.id;
     this.tab = preset.tab || 'street';
     const carRow = el('div', { class: 'my-cars' });
+    const selectCar = (id) => {
+      if (id === this.myCarId) return;
+      this.myCarId = id;
+      st.setActiveCar(id);
+      for (const btn of carRow.querySelectorAll('.my-car')) btn.classList.toggle('on', btn.dataset.carId === id);
+    };
     const renderCars = () => {
       carRow.innerHTML = '';
       for (const car of st.cars) {
         const img = el('img', { alt: '' });
         carThumb(car.cfg, img);
-        carRow.appendChild(el('button', { class: `my-car ${car.id === this.myCarId ? 'on' : ''}`, onclick: () => { audio.click(); this.myCarId = car.id; st.setActiveCar(car.id); renderCars(); renderTab(); } },
+        carRow.appendChild(el('button', { type: 'button', class: `my-car ${car.id === this.myCarId ? 'on' : ''}`, 'data-car-id': car.id, onclick: () => { audio.click(); selectCar(car.id); } },
           img, el('small', {}, MODELS[car.cfg.model].name), el('i', { class: 'rating' }, `PR ${ratingOf(car.cfg)}`)));
       }
     };

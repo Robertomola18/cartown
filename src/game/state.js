@@ -188,7 +188,7 @@ export class GameState extends Emitter {
     })
       .then(async (res) => {
         if (res.status === 401) {
-          redirectLogin();
+          this.emit('sessionExpired');
           return;
         }
         if (res.status === 409) {

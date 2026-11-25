@@ -843,12 +843,10 @@ export function snapshotNow() {
     pruneSnapshots(config.emergencyDir, 2);
 
     if (fs.existsSync(config.nasDir) && fs.statSync(config.nasDir).isDirectory()) {
-      try {
-        fs.copyFileSync(file, path.join(config.nasDir, path.basename(file)));
-        pruneSnapshots(config.nasDir, 30);
-      } catch (error) {
-        console.warn(`[snapshot] NAS copy failed: ${error.message}`);
-      }
+      fs.copyFile(file, path.join(config.nasDir, path.basename(file)), (error) => {
+        if (error) console.warn(`[snapshot] NAS copy failed: ${error.message}`);
+        else pruneSnapshots(config.nasDir, 30);
+      });
     }
     return file;
   } catch (error) {
@@ -863,12 +861,21 @@ export function startSnapshots() {
   snapshotTimer.unref?.();
 }
 
+export function dbPing() {
+  try {
+    return Boolean(db?.prepare('SELECT 1').get());
+  } catch {
+    return false;
+  }
+}
+
 export function closeDb() {
   if (snapshotTimer) {
     clearInterval(snapshotTimer);
     snapshotTimer = null;
   }
-  if (!db) return;
+  if (!db) return true;
+  let ok = true;
   try {
     let file = snapshotNow();
     if (!file) {
@@ -876,7 +883,10 @@ export function closeDb() {
       file = snapshotNow();
     }
     if (file) console.log(`[snapshot] closeDb: saved ${path.basename(file)}`);
-    else console.error('[snapshot] closeDb: snapshot failed after retry');
+    else {
+      console.error('[snapshot] closeDb: snapshot failed after retry');
+      ok = false;
+    }
   } finally {
     try {
       db.close();
@@ -885,6 +895,7 @@ export function closeDb() {
     }
     db = null;
   }
+  return ok;
 }
 
 const CAR_KEYS = ['model', 'paint', 'roof', 'finish', 'rim', 'rimColor', 'caliper', 'livery', 'liveryColor', 'number', 'spoiler', 'tint', 'neon', 'lower', 'upgrades'];

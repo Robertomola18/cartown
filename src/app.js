@@ -75,6 +75,7 @@ export class App {
     });
     this.state.on('goal', (def) => toast(`★ ${t(`goal.${def.id}`, { n: fmt(def.n) })} — ${t('claim')}!`, 'good', 3200));
     this.state.on('saveConflict', () => toast(t('saveConflict'), 'warn', 7000));
+    this.state.on('sessionExpired', () => toast(t('sessionExpired'), 'warn', 7000));
     // unlock audio on first interaction
     const unlock = () => {
       audio.ensure();
@@ -613,7 +614,7 @@ export class App {
 
   applyQuality(q) {
     const r = this.engine.renderer;
-    r.setPixelRatio(q === 'low' ? 1 : Math.min(window.devicePixelRatio || 1, 2));
+    r.setPixelRatio(q === 'low' ? 1 : Math.min(window.devicePixelRatio || 1, this.engine.maxPixelRatio));
     r.shadowMap.enabled = q !== 'low';
     this.engine.resize();
   }

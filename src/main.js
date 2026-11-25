@@ -60,25 +60,22 @@ function adminBotState(bot) {
 }
 
 async function loadBoot() {
-  const sessionRes = await fetch(apiUrl('/api/session'), {
-    credentials: 'same-origin',
-    cache: 'no-store',
-  });
-  if (sessionRes.status === 401) {
+  const adminBotId = Number(new URLSearchParams(window.location.search).get('adminBot'));
+  const dataPath = adminBotId ? `/api/admin/bot-garage?id=${adminBotId}` : '/api/state';
+  const [sessionRes, customCars, dataRes] = await Promise.all([
+    fetch(apiUrl('/api/session'), { credentials: 'same-origin', cache: 'no-store' }),
+    fetchCustomCars(),
+    fetch(apiUrl(dataPath), { credentials: 'same-origin', cache: 'no-store' }),
+  ]);
+  if (sessionRes.status === 401 || dataRes.status === 401) {
     redirectLogin();
     return null;
   }
   if (!sessionRes.ok) throw new Error('No se pudo validar la sesión');
   const session = await sessionRes.json();
-  const customCars = await fetchCustomCars();
-  const adminBotId = Number(new URLSearchParams(window.location.search).get('adminBot'));
   if (adminBotId) {
-    const res = await fetch(apiUrl(`/api/admin/bot-garage?id=${adminBotId}`), {
-      credentials: 'same-origin',
-      cache: 'no-store',
-    });
-    if (!res.ok) throw new Error('No se pudo cargar el garaje del bot');
-    const data = await res.json();
+    if (!dataRes.ok) throw new Error('No se pudo cargar el garaje del bot');
+    const data = await dataRes.json();
     const bot = data?.bot;
     if (!bot) throw new Error('Bot no encontrado');
     return {
@@ -88,16 +85,8 @@ async function loadBoot() {
       adminBot: { id: bot.id, name: bot.name, backUrl: apiUrl('/admin') },
     };
   }
-  const stateRes = await fetch(apiUrl('/api/state'), {
-    credentials: 'same-origin',
-    cache: 'no-store',
-  });
-  if (stateRes.status === 401) {
-    redirectLogin();
-    return null;
-  }
-  if (!stateRes.ok) throw new Error('No se pudo cargar la partida');
-  const save = await stateRes.json();
+  if (!dataRes.ok) throw new Error('No se pudo cargar la partida');
+  const save = await dataRes.json();
   return { session, save, customCars };
 }
 

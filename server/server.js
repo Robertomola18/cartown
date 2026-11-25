@@ -12,6 +12,7 @@ import {
   clearUserForceTutorial,
   closeDb,
   createUser,
+  dbPing,
   getBot,
   getSave,
   getUserByUsername,
@@ -580,11 +581,12 @@ async function handle(req, res) {
   }
 
   if (pathname === '/health' || pathname === withBase('/health')) {
-    sendJson(res, 200, {
-      ok: true,
+    const healthy = dbPing();
+    sendJson(res, healthy ? 200 : 503, {
+      ok: healthy,
       rooms: rooms.size,
       players: wss.clients.size,
-      users: 0,
+      users: listUsers().length,
       basePath: config.basePath,
     });
     return;
@@ -1041,6 +1043,18 @@ server.on('upgrade', (req, socket, head) => {
     socket.destroy();
     return;
   }
+  const origin = req.headers.origin;
+  if (origin) {
+    try {
+      const originHost = new URL(origin).hostname;
+      const requestHost = new URL(`http://${req.headers.host || 'localhost'}`).hostname;
+      if (originHost !== requestHost && originHost !== 'localhost') throw new Error('bad origin');
+    } catch {
+      socket.write('HTTP/1.1 403 Forbidden\r\n\r\n');
+      socket.destroy();
+      return;
+    }
+  }
   const session = getSession(req);
   if (!session) {
     socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
@@ -1066,10 +1080,11 @@ function shutdown(signal) {
   } catch {
     /* ignore */
   }
+  let snapshotOk = false;
   try {
-    closeDb();
+    snapshotOk = closeDb();
   } finally {
-    process.exit(0);
+    process.exit(snapshotOk ? 0 : 1);
   }
 }
 

@@ -123,10 +123,11 @@ export class Hud {
     state.on('goals', () => this.refreshGoals());
     state.on('jobs', () => this.refreshJobs());
     this.refreshAll();
-    setInterval(() => {
+    this._fuelTimer = setInterval(() => {
       state.tickFuel();
       this.refreshFuelTimer();
     }, 500);
+    window.addEventListener('pagehide', () => clearInterval(this._fuelTimer), { once: true });
   }
 
   nav(scene, action) {

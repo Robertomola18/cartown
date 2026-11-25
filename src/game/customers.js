@@ -106,8 +106,8 @@ export class CustomerManager {
     const cfg = this.randomCfg();
     const obj = createCar(cfg, { lod: 'low' });
     const services = SERVICES[station.kind] || [];
-    const express = this.spawnCount++ % 3 === 2;
-    const pool = (express ? services.filter((entry) => entry.express) : services.filter((entry) => !entry.express));
+    const long = this.spawnCount++ % 5 === 4;
+    const pool = long ? services.filter((entry) => entry.long) : services.filter((entry) => !entry.long);
     const svc = pick(pool.length ? pool : services);
     const R = S.layout;
     obj.position.set(R.lane1, 0, -40);

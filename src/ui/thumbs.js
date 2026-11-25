@@ -12,13 +12,27 @@ let scene = null;
 let camera = null;
 const cache = new Map();
 const queue = [];
+const MAX_THUMBS = 96;
 let busy = false;
+
+function cached(key) {
+  if (!cache.has(key)) return null;
+  const value = cache.get(key);
+  cache.delete(key);
+  cache.set(key, value);
+  return value;
+}
+
+function remember(key, value) {
+  cache.set(key, value);
+  if (cache.size > MAX_THUMBS) cache.delete(cache.keys().next().value);
+}
 
 function init() {
   if (renderer) return;
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(1);
-  renderer.setSize(240, 150);
+  renderer.setSize(192, 120);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NeutralToneMapping;
   scene = new THREE.Scene();
@@ -29,7 +43,7 @@ function init() {
   const d = new THREE.DirectionalLight(0xffffff, 2);
   d.position.set(3, 6, 4);
   scene.add(d);
-  camera = new THREE.PerspectiveCamera(28, 240 / 150, 0.1, 50);
+  camera = new THREE.PerspectiveCamera(28, 192 / 120, 0.1, 50);
 }
 
 function render(obj, { dist = 6.4, height = 2.2, ty = 0.55, yaw = 0.75 } = {}) {
@@ -39,7 +53,7 @@ function render(obj, { dist = 6.4, height = 2.2, ty = 0.55, yaw = 0.75 } = {}) {
   camera.position.set(Math.sin(0.4) * dist, height, Math.cos(0.4) * dist);
   camera.lookAt(0, ty, 0);
   renderer.render(scene, camera);
-  const url = renderer.domElement.toDataURL('image/png');
+  const url = renderer.domElement.toDataURL('image/webp', 0.82);
   scene.remove(obj);
   return url;
 }
@@ -53,23 +67,25 @@ function pump() {
       busy = false;
       return;
     }
-    if (!cache.has(job.key)) {
+    if (cached(job.key) === null) {
       try {
-        cache.set(job.key, job.make());
+        remember(job.key, job.make());
       } catch (e) {
         console.warn('thumb failed', e);
-        cache.set(job.key, '');
+        remember(job.key, '');
       }
     }
-    for (const cb of job.cbs) cb(cache.get(job.key));
+    const url = cached(job.key);
+    for (const cb of job.cbs) cb(url);
     setTimeout(step, 0);
   };
   step();
 }
 
 function request(key, make, cb) {
-  if (cache.has(key)) {
-    cb(cache.get(key));
+  const hit = cached(key);
+  if (hit !== null) {
+    cb(hit);
     return;
   }
   const existing = queue.find((j) => j.key === key);

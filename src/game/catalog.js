@@ -125,24 +125,25 @@ export const EXPANSIONS = [
 
 export const SERVICES = {
   lift: [
-    { id: 'expressLift', name: 'Express Lube', icon: '⚡', time: 2, fuel: 1, coins: 35, xp: 6, express: true },
-    { id: 'oil', name: 'Oil Change', icon: '🛢️', time: 8, fuel: 1, coins: 45, xp: 8 },
-    { id: 'tires', name: 'Tire Swap', icon: '🛞', time: 12, fuel: 1, coins: 65, xp: 11 },
-    { id: 'brakes', name: 'Brake Job', icon: '🔧', time: 16, fuel: 2, coins: 110, xp: 18 },
-    { id: 'tune', name: 'Engine Tune-Up', icon: '⚙️', time: 22, fuel: 2, coins: 150, xp: 24 },
-    { id: 'rebuild', name: 'Engine Rebuild', icon: '🔧', time: 240, fuel: 4, coins: 450, xp: 80 },
-    { id: 'gearbox', name: 'Gearbox Overhaul', icon: '⚙️', time: 360, fuel: 6, coins: 800, xp: 140 },
-    { id: 'restoration', name: 'Full Restoration', icon: '🏆', time: 720, fuel: 8, coins: 1600, xp: 260 },
+    { id: 'expressLift', name: 'Express Lube', icon: '⚡', time: 1, fuel: 1, coins: 25, xp: 5, express: true },
+    { id: 'oil', name: 'Oil Change', icon: '🛢️', time: 1, fuel: 1, coins: 45, xp: 8 },
+    { id: 'tires', name: 'Tire Swap', icon: '🛞', time: 2, fuel: 1, coins: 65, xp: 11 },
+    { id: 'brakes', name: 'Brake Job', icon: '🔧', time: 2, fuel: 2, coins: 90, xp: 15 },
+    { id: 'tune', name: 'Engine Tune-Up', icon: '⚙️', time: 2, fuel: 2, coins: 120, xp: 20 },
+    { id: 'rebuild', name: 'Engine Rebuild', icon: '🔧', time: 3, fuel: 4, coins: 240, xp: 40, long: true },
+    { id: 'gearbox', name: 'Gearbox Overhaul', icon: '⚙️', time: 3, fuel: 6, coins: 300, xp: 50, long: true },
+    { id: 'restoration', name: 'Full Restoration', icon: '🏆', time: 3, fuel: 8, coins: 360, xp: 60, long: true },
   ],
   wash: [
-    { id: 'expressWash', name: 'Express Wash', icon: '⚡', time: 2, fuel: 1, coins: 30, xp: 5, express: true },
-    { id: 'wash', name: 'Car Wash', icon: '🫧', time: 6, fuel: 1, coins: 40, xp: 7 },
-    { id: 'wax', name: 'Wax & Polish', icon: '✨', time: 10, fuel: 1, coins: 70, xp: 11 },
+    { id: 'expressWash', name: 'Express Wash', icon: '⚡', time: 1, fuel: 1, coins: 30, xp: 5, express: true },
+    { id: 'wash', name: 'Car Wash', icon: '🫧', time: 1, fuel: 1, coins: 40, xp: 7 },
+    { id: 'wax', name: 'Wax & Polish', icon: '✨', time: 2, fuel: 1, coins: 70, xp: 11 },
+    { id: 'detail', name: 'Full Detail', icon: '🧼', time: 3, fuel: 2, coins: 140, xp: 22, long: true },
   ],
   paint: [
-    { id: 'expressPaint', name: 'Express Touch-Up', icon: '⚡', time: 2, fuel: 1, coins: 45, xp: 7, express: true },
-    { id: 'scratch', name: 'Scratch Repair', icon: '🎨', time: 15, fuel: 2, coins: 150, xp: 22 },
-    { id: 'respray', name: 'Full Respray', icon: '🖌️', time: 26, fuel: 3, coins: 280, xp: 40 },
+    { id: 'expressPaint', name: 'Express Touch-Up', icon: '⚡', time: 1, fuel: 1, coins: 45, xp: 7, express: true },
+    { id: 'scratch', name: 'Scratch Repair', icon: '🎨', time: 2, fuel: 2, coins: 150, xp: 22 },
+    { id: 'respray', name: 'Full Respray', icon: '🖌️', time: 3, fuel: 3, coins: 280, xp: 40, long: true },
   ],
 };
 

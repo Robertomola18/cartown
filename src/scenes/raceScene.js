@@ -22,6 +22,9 @@ export class RaceScene {
     this.camMode = 'intro';
     this.camPos = new THREE.Vector3(-12, 3, 0);
     this.camLook = new THREE.Vector3(10, 0.5, 0);
+    this.camTargetPos = new THREE.Vector3();
+    this.camTargetLook = new THREE.Vector3();
+    this.crowdMatrix = new THREE.Matrix4();
     this.smoke = [];
     this.build();
   }
@@ -299,7 +302,7 @@ export class RaceScene {
     // crowd bounce
     if (this.crowd && this.excited !== undefined) {
       const { body, head, people } = this.crowd;
-      const m4 = new THREE.Matrix4();
+      const m4 = this.crowdMatrix;
       const amp = this.excited ? 0.18 : 0.03;
       for (let i = 0; i < people.length; i += 1) {
         const p = people[i];
@@ -322,16 +325,16 @@ export class RaceScene {
       this.introT += dt;
       const t = Math.min(1, this.introT / 2.5);
       const ang = -0.9 + t * 0.75;
-      pos = new THREE.Vector3(Math.cos(ang) * -9 + 2, 2.4 + (1 - t) * 1.5, Math.sin(ang) * 9);
-      look = new THREE.Vector3(1, 0.6, 0);
+      pos = this.camTargetPos.set(Math.cos(ang) * -9 + 2, 2.4 + (1 - t) * 1.5, Math.sin(ang) * 9);
+      look = this.camTargetLook.set(1, 0.6, 0);
     } else {
       const focusX = this.focus === 'both' ? mid : cars[this.focus || 0].position.x;
       const followX = Math.min(focusX, RACE_DISTANCE + 25);
-      pos = new THREE.Vector3(followX - 8.5, 3.0, this.focus === 'both' ? 0 : (this.focus === 1 ? 6.5 : -6.5));
-      look = new THREE.Vector3(Math.min(lead, RACE_DISTANCE + 30) + 6, 0.6, 0);
+      pos = this.camTargetPos.set(followX - 8.5, 3.0, this.focus === 'both' ? 0 : (this.focus === 1 ? 6.5 : -6.5));
+      look = this.camTargetLook.set(Math.min(lead, RACE_DISTANCE + 30) + 6, 0.6, 0);
       if (this.finishCam) {
-        pos = new THREE.Vector3(RACE_DISTANCE + 6, 2.2, -8.5);
-        look = new THREE.Vector3(lead - 2, 0.6, 0);
+        pos = this.camTargetPos.set(RACE_DISTANCE + 6, 2.2, -8.5);
+        look = this.camTargetLook.set(lead - 2, 0.6, 0);
       }
     }
     this.camPos.lerp(pos, 1 - Math.exp(-6 * dt));
