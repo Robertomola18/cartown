@@ -1,0 +1,39 @@
+services:
+  cartown:
+    build: .
+    image: cartown:local
+    container_name: cartown
+    restart: unless-stopped
+    init: true
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - TZ=${TZ:-UTC}
+      - CARTON_BASE_PATH=${CARTON_BASE_PATH:-/cartown}
+      - CARTON_DATA_DIR=/data
+      - CARTON_RAM_DIR=/dev/shm/cartown
+      - CARTON_TRUST_PROXY=${CARTON_TRUST_PROXY:-0}
+      - CARTON_COOKIE_SECURE=${CARTON_COOKIE_SECURE:-0}
+      - CARTON_REGISTRATION=${CARTON_REGISTRATION:-open}
+      - CARTON_INVITE_CODE=${CARTON_INVITE_CODE:-}
+      - CARTON_SNAPSHOT_MINUTES=${CARTON_SNAPSHOT_MINUTES:-5}
+    volumes:
+      - cartown_data:/data
+    tmpfs:
+      - /dev/shm/cartown:size=64m,mode=1777
+      - /tmp:size=32m
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    mem_limit: 256m
+    pids_limit: 128
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "1"
+
+volumes:
+  cartown_data:

@@ -1,0 +1,8 @@
+.git
+node_modules
+dist
+var
+dev
+docs
+*.md
+server/*.test.js
