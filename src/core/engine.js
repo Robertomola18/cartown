@@ -29,6 +29,7 @@ export class Engine {
     this.keys = new Set();
     this.listeners = [];
     this.paused = false;
+    this.contextLost = false;
 
     window.addEventListener('resize', () => this.resize());
     window.addEventListener('keydown', (e) => {
@@ -48,6 +49,8 @@ export class Engine {
     window.addEventListener('pointerup', (e) => this.active?.onPointerUp?.(e));
     el.addEventListener('wheel', (e) => { e.preventDefault(); this.active?.onWheel?.(e); }, { passive: false });
     el.addEventListener('contextmenu', (e) => e.preventDefault());
+    el.addEventListener('webglcontextlost', (e) => { e.preventDefault(); this.contextLost = true; console.warn('WebGL context lost'); });
+    el.addEventListener('webglcontextrestored', () => { this.contextLost = false; console.warn('WebGL context restored'); });
 
     this.resize();
     renderer.setAnimationLoop(() => this.frame());
@@ -80,7 +83,7 @@ export class Engine {
 
   frame() {
     const dt = Math.min(this.clock.getDelta(), 0.05);
-    if (this.paused) return;
+    if (this.paused || this.contextLost) return;
     this.time += dt;
     for (const fn of this.listeners) fn(dt, this.time);
     const a = this.active;

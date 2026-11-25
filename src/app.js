@@ -290,6 +290,7 @@ export class App {
 
   openRaceMenu(preset) {
     if (!this._navGuard('race')) return;
+    try { sessionStorage.removeItem('cartown:pendingScene'); } catch {}
     this.returnTo = this.mode === 'town' ? 'town' : null;
     if (!preset?.friend) {
       const car = preset?.carId ? this.state.getCar(preset.carId) : this.state.activeCar;
