@@ -414,7 +414,7 @@ export class CustomerManager {
       const result = st.startCustomerJob(c.svc.id, { stationUid: c.station.uid, cfg: c.cfg });
       if (!result.ok) {
         audio.error();
-        const msg = result.error === 'fuel' ? t('notEnoughFuel') : result.error === 'stationBusy' ? t('stationBusy') : t('socialError');
+        const msg = result.error === 'fuel' ? t('notEnoughFuel') : result.error === 'slots' ? t('errNoSlots') : result.error === 'station' ? t('errStation') : result.error === 'stationBusy' ? t('stationBusy') : t('socialError');
         S(this).ui?.toast(msg, 'warn');
         if (result.error === 'fuel') S(this).ui?.flashFuel?.();
         return;

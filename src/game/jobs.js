@@ -4,7 +4,7 @@
 
 import { SERVICES, UPGRADES, UPGRADE_MAX, upgradeCost } from './catalog.js';
 
-export const CUSTOMER_JOB_SLOTS = 2;
+export const CUSTOMER_JOB_SLOTS = 8;
 export const OWN_JOB_SLOTS = 1;
 export const MAX_JOBS = CUSTOMER_JOB_SLOTS + OWN_JOB_SLOTS;
 

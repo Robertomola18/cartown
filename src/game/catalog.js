@@ -179,12 +179,12 @@ export const CUSTOM_PRICES = { paint: 250, finish: 300, roof: 150, rim: 400, rim
 
 // Friends that visit and park outside (the names seen in the screenshots).
 export const NPC_FRIENDS = [
-  { id: 'f_daisy', name: 'Daisy', level: 6, avatar: { skin: '#f1c7a3', hair: '#e9b949', shirt: '#ff7aa8', style: 'long' }, car: { model: 'ioniq3' } },
-  { id: 'f_eddy', name: 'Eddy', level: 9, avatar: { skin: '#c68a5e', hair: '#2a1b10', shirt: '#2f8be0', style: 'short' }, car: { model: 'muscle', paint: '#2f5fb8', livery: 'stripes', liveryColor: '#f3f3f1', upgrades: { engine: 2, turbo: 1, gearbox: 1, tires: 1, weight: 0, nitro: 1 } } },
+  { id: 'f_daisy', botId: 1, name: 'Daisy', level: 6, avatar: { skin: '#f1c7a3', hair: '#e9b949', shirt: '#ff7aa8', style: 'long' }, car: { model: 'ioniq3' } },
+  { id: 'f_eddy', botId: 2, name: 'Eddy', level: 9, avatar: { skin: '#c68a5e', hair: '#2a1b10', shirt: '#2f8be0', style: 'short' }, car: { model: 'muscle', paint: '#2f5fb8', livery: 'stripes', liveryColor: '#f3f3f1', upgrades: { engine: 2, turbo: 1, gearbox: 1, tires: 1, weight: 0, nitro: 1 } } },
   { id: 'f_joselia', name: 'Joselia', level: 12, avatar: { skin: '#8d5a3b', hair: '#1a1010', shirt: '#f2b705', style: 'bun' }, car: { model: 'amgsuv', upgrades: { engine: 1, turbo: 1, gearbox: 1, tires: 1, weight: 0, nitro: 0 } } },
   { id: 'f_mykola', name: 'Mykola', level: 7, avatar: { skin: '#f3d2b5', hair: '#6b4a2b', shirt: '#3a9d4a', style: 'cap' }, car: { model: 'van', paint: '#f2f0e8', roof: '#d9262b' } },
   { id: 'f_mel', name: 'Mel', level: 4, avatar: { skin: '#e7b48f', hair: '#a8322a', shirt: '#7a3fd0', style: 'long' }, car: { model: 'smart2', paint: '#22c3c9', roof: '#f3f3f1' } },
-  { id: 'f_zoni', name: 'Zoni', level: 15, avatar: { skin: '#5a3825', hair: '#111', shirt: '#d9262b', style: 'short' }, car: { model: 'super', paint: '#121316', neon: '#ff2bd6', upgrades: { engine: 2, turbo: 2, gearbox: 2, tires: 2, weight: 1, nitro: 2 } } },
+  { id: 'f_zoni', botId: 3, name: 'Zoni', level: 15, avatar: { skin: '#5a3825', hair: '#111', shirt: '#d9262b', style: 'short' }, car: { model: 'super', paint: '#121316', neon: '#ff2bd6', upgrades: { engine: 2, turbo: 2, gearbox: 2, tires: 2, weight: 1, nitro: 2 } } },
 ];
 
 export const STREET_RACERS = [

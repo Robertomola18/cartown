@@ -532,7 +532,7 @@ export class App {
         }
         if (botId) {
           try {
-            this.visitGarage((await socialApi.visitBot(botId)).host);
+            this.visitGarage((await socialApi.visitBot(botId)).host, { isBot: true });
             return;
           } catch (error) {
             console.warn('visitBot', error);
