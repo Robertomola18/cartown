@@ -164,6 +164,7 @@ export function openJobs(app) {
     for (const car of st.cars) {
       const busy = st.carJob(car.id);
       const lift = app.garage?.freeLift();
+      const mechanic = app.garage?.freeMechanicIndex?.() ?? -1;
       const tutorialJob = st.tutorialJobPending();
       const options = ownJobOptions(car);
       const card = el('div', { class: `job-car ${busy ? 'busy' : ''}` },
@@ -176,9 +177,9 @@ export function openJobs(app) {
           el('button', {
             class: `btn job-start ${tutorialJob ? 'btn-green tutorial-job' : 'btn-blue'}`,
             'data-tutorial': tutorialJob ? 'repairStart' : null,
-            disabled: Boolean(busy) || !lift,
+            disabled: Boolean(busy) || !lift || mechanic < 0,
             onclick: async () => {
-              const result = st.startOwnJob(car.id, select.value, lift?.uid);
+              const result = st.startOwnJob(car.id, select.value, lift?.uid, mechanic);
               if (!result.ok) {
                 toast(errorText(result.error), 'warn');
                 return;
@@ -201,6 +202,8 @@ export function openJobs(app) {
   const actionsSignature = () => [
     app.garage?.freeLift()?.uid || '',
     app.garage?.freeMechanicCount?.() ?? st.mechanics,
+    (app.garage?.mechanics || []).map((m) => (m.busy ? m.station?.uid || 'busy' : 'free')).join(','),
+    st.activeJobs().map((job) => `${job.id}:${job.kind}:${job.stationUid || ''}:${job.mechanicIndex ?? ''}:${jobReady(job) ? 1 : 0}:${job.claimed ? 1 : 0}`).join('|'),
     st.jobsUsed('customer') >= CUSTOMER_JOB_SLOTS ? 1 : 0,
     st.jobsUsed('own'),
     st.data.fuel,

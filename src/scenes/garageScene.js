@@ -507,18 +507,28 @@ export class GarageScene {
     for (const job of this.state.activeJobs('customer')) {
       if (shown.has(job.id)) continue;
       const kind = serviceStation(job.serviceId);
+      if (!kind) continue;
       let station = this.stations.find((st) => st.uid === job.stationUid && st.kind === kind && !st.occupant && !st.playerJob);
       if (!station) station = this.freeStation(kind);
-      if (!station) station = this.stations.find((st) => !st.occupant && !st.playerJob);
       if (!station) continue;
-      if (job.stationUid !== station.uid) {
-        job.stationUid = station.uid;
-        this.state.save();
-      }
+      const previousUid = job.stationUid;
       const ready = jobReady(job);
       const idx = Number.isInteger(job.mechanicIndex) ? job.mechanicIndex : -1;
-      this.customers.spawnJob(job, station, job.cfg, idx, { ready, direct: !ready });
+      const spawned = this.customers.spawnJob(job, station, job.cfg, idx, { ready, direct: !ready });
+      if (spawned && previousUid !== job.stationUid) this.state.save();
     }
+  }
+
+  syncJobs() {
+    const ownIds = new Set(this.state.activeJobs('own').map((job) => job.id));
+    for (const st of this.stations) {
+      if (st.playerJob && !ownIds.has(st.playerJob.id)) this.detachOwnJob(st.playerJob);
+    }
+    const customerIds = new Set(this.state.activeJobs('customer').map((job) => job.id));
+    for (const c of [...this.customers.list]) {
+      if (c.job && !customerIds.has(c.job.id)) this.customers.claimByJob(c.job.id);
+    }
+    this.syncJobStations();
   }
 
   claimCustomerJob(jobId) {
@@ -560,16 +570,23 @@ export class GarageScene {
   }
 
   syncJobStations() {
+    const previous = new Map();
     for (const st of this.stations) {
       if (!st.playerJob) this.clearJobLabel(st);
+      else previous.set(st.playerJob.id, st);
       st.playerJob = null;
       st.playerCarObj = null;
     }
     let changed = false;
     for (const job of this.state.activeJobs('own')) {
-      let st = this.stations.find((entry) => entry.uid === job.stationUid && entry.kind === 'lift' && !entry.occupant && !entry.playerJob);
-      if (!st) st = this.stations.find((entry) => entry.kind === 'lift' && !entry.occupant && !entry.playerJob);
+      let st = this.stations.find((entry) => entry.uid === job.stationUid && entry.kind === 'lift' && !entry.occupant && !entry.playerJob && (!this.state.stationReserved(entry.uid) || entry.uid === job.stationUid));
+      if (!st) st = this.stations.find((entry) => entry.kind === 'lift' && !entry.occupant && !entry.playerJob && !this.state.stationReserved(entry.uid));
       if (!st) continue;
+      const old = previous.get(job.id);
+      if (old && old !== st) {
+        const m = this.mechanics.find((entry) => entry.busy && entry.station === old);
+        if (m) this.releaseMechanic(m);
+      }
       if (job.stationUid !== st.uid) changed = true;
       job.stationUid = st.uid;
       st.playerJob = job;

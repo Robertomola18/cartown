@@ -468,6 +468,21 @@ export class GameState extends Emitter {
     this.data.jobs = this.data.jobs.filter((job) => {
       if (!job || !job.id || !job.endsAt) return false;
       if (job.kind === 'own' && !this.getCar(job.carId)) return false;
+      if (job.kind === 'customer' && !job.origin) {
+        const service = CUSTOMER_SERVICES.find((entry) => entry.id === job.serviceId);
+        const reward = service ? this.streetReward(service) : null;
+        const minutes = Math.max(1, Math.min(3, Number(service?.time) || 1));
+        const duration = minutes * 60 * 1000;
+        const startAt = Number(job.startAt) || Date.now() - duration;
+        job.origin = 'street';
+        job.duration = duration;
+        job.endsAt = Math.min(Number(job.endsAt) || startAt + duration, startAt + duration);
+        if (reward) {
+          job.coins = reward.coins;
+          job.xp = reward.xp;
+        }
+        delete job.mechanicIndex;
+      }
       return true;
     });
     return this.data.jobs;
@@ -554,13 +569,14 @@ export class GameState extends Emitter {
     return { ok: true, job };
   }
 
-  startOwnJob(carId, upgradeKey, stationUid) {
+  startOwnJob(carId, upgradeKey, stationUid, mechanicIndex = -1) {
     const car = this.getCar(carId);
     if (!car) return { ok: false, error: 'car' };
 
     if (this.isCarBusy(carId)) return { ok: false, error: 'busy' };
     if (this.jobsUsed('own') >= OWN_JOB_SLOTS) return { ok: false, error: 'slots' };
     if (!stationUid) return { ok: false, error: 'station' };
+    if (!Number.isInteger(mechanicIndex) || mechanicIndex < 0) return { ok: false, error: 'mechanic' };
     if (this.stationReserved(stationUid)) {
       return { ok: false, error: 'stationBusy' };
     }
@@ -576,6 +592,7 @@ export class GameState extends Emitter {
       job.tutorial = true;
     }
     job.stationUid = stationUid;
+    job.mechanicIndex = mechanicIndex;
     job.homePlaced = car.placed ? { ...car.placed } : null;
     car.placed = null;
     this.data.jobs.push(job);

@@ -73,6 +73,7 @@ export class App {
       audio.levelUp();
       banner(t('levelUp'), `${t('level')} ${lvl}`, 'gold', 2600);
     });
+    this.state.on('change', () => this.garage?.syncJobs?.());
     this.state.on('goal', (def) => toast(`★ ${t(`goal.${def.id}`, { n: fmt(def.n) })} — ${t('claim')}!`, 'good', 3200));
     this.state.on('saveConflict', () => toast(t('saveConflict'), 'warn', 7000));
     this.state.on('sessionExpired', () => toast(t('sessionExpired'), 'warn', 7000));
