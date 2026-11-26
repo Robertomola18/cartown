@@ -27,7 +27,7 @@ sesión. El registro está abierto por defecto; se puede cerrar con
 | --- | --- |
 | **Garaje** | Garaje isométrico con elevadores, zona de lavado, cabina de pintura, decoración y ampliaciones de parcela. |
 | **Clientes** | Coches NPC que llegan y piden servicios: aceite, neumáticos, frenos, puesta a punto, lavado, cera o repintado. |
-| **Trabajos y taller** | Coches de la calle de 1-3 min con pago bajo y hasta 8 encargos del panel Trabajos de hasta 24 h / 2600 monedas, más una mejora de un coche propio al 60 % del precio. Cada estación solo admite el servicio correspondiente y cada mecánico atiende un coche; se pueden contratar hasta 6 mecánicos. |
+| **Trabajos y taller** | Coches de la calle de 1-3 min con pago bajo y hasta 8 encargos del panel Trabajos de hasta 24 h / 2600 monedas, y mejoras de coches propios al 60 % del precio en paralelo hasta agotar elevadores y mecánicos libres. Cada estación solo admite el servicio correspondiente y cada mecánico atiende un coche; se pueden contratar hasta 6 mecánicos. |
 | **Comprar coches** | Expositor con los vehículos integrados más los coches creados desde el panel de administración, incluidas 4 hipercoches de nivel 100–200. |
 | **Pintura y tuning** | Pintura, acabados, techo bicolor, llantas, pinzas, vinilos, alerones, tintado, altura, neón y mejoras de motor, turbo, cambio, neumáticos, peso y nitro. |
 | **Editar garaje** | Compra, coloca, mueve, gira y vende objetos; cambia suelos, paredes y amplía el taller. |

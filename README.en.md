@@ -42,7 +42,7 @@ Direct captures from a live playthrough; more are available in the [`MANUAL.md`]
    with low pay: base service coins plus luxury/level tips, plus XP.
 3. **Use the Jobs panel.** You can accept up to **8 long errands** (up to
    **24 h** and **2600 coins**) that keep running while the game is closed,
-   and reserve the upgrade slot to install the next part at a discount.
+   and install discounted upgrades in parallel while lifts and mechanics are free.
 4. **Buy and prepare cars.** The dealer shows 21 vehicles with stats and an
    initial colour. Then change the finish, two-tone roof, wheels, liveries,
    spoilers, tint, suspension, lights and mechanical parts.
@@ -66,7 +66,7 @@ Direct captures from a live playthrough; more are available in the [`MANUAL.md`]
 | --- | --- |
 | **My Garage** | Isometric garage with posters, red service lifts, a back-wall billboard, a velvet rope, a crossroads with traffic, friends' cars parked outside and an object editor. |
 | **Customers** | NPC cars request oil, tires, brakes, tuning, washing, waxing and repainting. Each service uses fuel and pays coins, XP and tips. |
-| **Jobs** | 1-3 min street cars with low pay; up to 8 panel errands up to 24 h / 2600 coins, persistent progress and one discounted workshop slot. |
+| **Jobs** | 1-3 min street cars with low pay; up to 8 panel errands up to 24 h / 2600 coins, persistent progress and parallel discounted upgrades limited by free lifts and mechanics. |
 | **Buy Cars** | Dealer with 21 vehicles, stats, eight featured models and a colour choice before purchase. |
 | **Paint & Tune** | Finishes, two-tone roof, 13 wheel designs, liveries, spoilers, tint, stance, underglow and mechanical upgrades. |
 | **Edit Garage** | Buy, place, move, rotate and sell lifts, wash bays, paint booths, arcades, jukeboxes, tables, tools and tiles. Includes floor/wall themes, lot expansions and tools that snap to tables. |

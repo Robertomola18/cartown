@@ -32,7 +32,7 @@ Capturas diretas de uma partida; há mais no [`MANUAL.md`](MANUAL.md) (em espanh
 
 1. **Abra sua garagem.** Escolha o idioma, siga o tutorial e acompanhe o HUD: dinheiro, experiência, nível, combustível, trabalhos e menu principal.
 2. **Atenda clientes da rua.** Carros NPC chegam e pedem óleo, pneus, freios, ajuste, lavagem, cera ou repintura. São tarefas curtas de **1-3 minutos** com pagamento baixo: moedas base do serviço mais gorjetas de luxo/nível, além de XP.
-3. **Use o painel Trabalhos.** Aceite até **8 tarefas longas** (até **24 h** e **2600 moedas**) que continuam avançando com o jogo fechado; além disso, reserve a vaga de melhoria para instalar a próxima peça com desconto.
+3. **Use o painel Trabalhos.** Aceite até **8 tarefas longas** (até **24 h** e **2600 moedas**) que continuam avançando com o jogo fechado; além disso, inicie melhorias dos seus carros em paralelo enquanto houver elevadores e mecânicos livres, com desconto.
 4. **Compre e prepare carros.** A concessionária mostra 21 veículos com estatísticas e cor inicial. Depois é possível mudar acabamento, teto bicolor, rodas, adesivos, spoilers, película, suspensão, luzes e mecânica.
 5. **Decore a garagem.** Compre, coloque, mova, gire e venda elevadores, lava-jato, cabine de pintura, fliperama, jukebox, mesas, ferramentas, tapetes e baldosas. Há temas de piso e parede e ampliação do terreno.
 6. **Dirija pela cidade.** Visite a concessionária, pintura, pista, posto, lava-jato, sua garagem e casas de amigos. A cidade tem ruas, calçadas elevadas, faixas de pedestres, parques, mobiliário, tráfego, pedestres e minimapa.
@@ -45,7 +45,7 @@ Capturas diretas de uma partida; há mais no [`MANUAL.md`](MANUAL.md) (em espanh
 | --- | --- |
 | **Minha garagem** | Garagem isométrica com pôsteres, elevadores vermelhos, letreiro na parede, cordão de veludo, cruzamento com tráfego, carros de amigos estacionados do lado de fora e editor de objetos. |
 | **Clientes** | Carros NPC pedem óleo, pneus, freios, ajuste, lavagem, cera e repintura. Cada serviço consome combustível e rende moedas, experiência e gorjetas. |
-| **Trabalhos** | Carros da rua de 1-3 min com pagamento baixo; até 8 tarefas no painel de até 24 h e 2600 moedas, progresso persistente e uma vaga na oficina para melhorias com desconto. |
+| **Trabalhos** | Carros da rua de 1-3 min com pagamento baixo; até 8 tarefas no painel de até 24 h e 2600 moedas, progresso persistente e melhorias próprias simultâneas limitadas por elevadores e mecânicos livres. |
 | **Comprar carros** | Concessionária com 21 veículos, estatísticas, oito modelos em destaque e escolha de cor antes da compra. |
 | **Pintura e tuning** | Acabamentos, teto bicolor, 13 desenhos de rodas, adesivos, spoilers, película, suspensão, underglow e melhorias mecânicas. |
 | **Editar garagem** | Compre, coloque, mova, gire e venda elevadores, lava-jato, cabine de pintura, fliperama, jukebox, mesas, ferramentas e baldosas. Inclui temas de piso e parede, ampliação e ferramentas que se encaixam em mesas. |

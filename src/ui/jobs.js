@@ -61,9 +61,11 @@ export function openJobs(app) {
     summary.innerHTML = '';
     const customer = st.jobsUsed('customer');
     const own = st.jobsUsed('own');
+    const liftCount = app.garage?.stations?.filter((station) => station.kind === 'lift').length || OWN_JOB_SLOTS;
+    const ownCap = Math.min(OWN_JOB_SLOTS, st.mechanics, liftCount);
     summary.append(
       el('span', { class: 'job-pill' }, `${t('jobsErrands')} ${customer}/${CUSTOMER_JOB_SLOTS}`),
-      el('span', { class: 'job-pill' }, `${t('jobsWorkshop')} ${own}/${OWN_JOB_SLOTS}`),
+      el('span', { class: 'job-pill' }, `${t('jobsWorkshop')} ${own}/${ownCap}`),
       el('span', { class: 'job-pill muted' }, `${t('jobsLiftsFree')} ${app.garage?.stations.filter((s) => s.kind === 'lift' && !s.occupant && !s.playerJob).length ?? 0}`),
       el('span', { class: 'job-pill muted' }, `${st.data.fuel}/${st.fuelMax} ${t('fuel')}`),
     );

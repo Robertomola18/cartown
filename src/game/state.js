@@ -503,8 +503,8 @@ export class GameState extends Emitter {
 
   jobSlots(kind) {
     if (kind === 'customer') return CUSTOMER_JOB_SLOTS;
-    if (kind === 'own') return OWN_JOB_SLOTS;
-    return CUSTOMER_JOB_SLOTS + OWN_JOB_SLOTS;
+    if (kind === 'own') return Math.min(OWN_JOB_SLOTS, this.mechanics);
+    return CUSTOMER_JOB_SLOTS + this.jobSlots('own');
   }
 
   tutorialSession() { return this.data.settings.tutorial || null; }
@@ -574,9 +574,10 @@ export class GameState extends Emitter {
     if (!car) return { ok: false, error: 'car' };
 
     if (this.isCarBusy(carId)) return { ok: false, error: 'busy' };
-    if (this.jobsUsed('own') >= OWN_JOB_SLOTS) return { ok: false, error: 'slots' };
+    if (this.jobsUsed('own') >= this.jobSlots('own')) return { ok: false, error: 'slots' };
     if (!stationUid) return { ok: false, error: 'station' };
     if (!Number.isInteger(mechanicIndex) || mechanicIndex < 0) return { ok: false, error: 'mechanic' };
+    if (this.activeJobs().some((job) => job.mechanicIndex === mechanicIndex)) return { ok: false, error: 'mechanic' };
     if (this.stationReserved(stationUid)) {
       return { ok: false, error: 'stationBusy' };
     }

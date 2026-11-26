@@ -31,7 +31,7 @@ Car Town combina gestión de taller, coleccionismo de coches, conducción ligera
 | Actividad | Qué haces | Recompensa habitual |
 | --- | --- | --- |
 | Atender clientes | Recibes coches NPC que piden aceite, neumáticos, frenos, puesta a punto, lavado, encerado o repintado. | Monedas, experiencia, propinas y puntos de lujo. |
-| Atender la calle o usar Trabajos | Los coches que llegan solos duran 1-3 min y pagan poco; el panel admite hasta 8 encargos de hasta 24 h / 2600 monedas y reservas el hueco de mejora. | Dinero, XP y una instalación de pieza con descuento. |
+| Atender la calle o usar Trabajos | Los coches que llegan solos duran 1-3 min y pagan poco; el panel admite hasta 8 encargos de hasta 24 h / 2600 monedas y puedes usar varios elevadores a la vez si tienes mecánicos libres. | Dinero, XP y una instalación de pieza con descuento. |
 | Comprar y tunear | Eliges coches en el concesionario y cambias pintura, llantas, vinilos, mecánica, etc. | Coches más rápidos y mejor presentados. |
 | Decorar | Compras, mueves, giras y vendes objetos del garaje; cambias suelos, paredes y tamaño. | Garaje propio y más estaciones de servicio. |
 | Conducir | Sales a una ciudad con tráfico, peatones y minimapa. | Acceso a tiendas, pista, gasolinera, lavadero y casas de amigos. |
@@ -179,7 +179,7 @@ Los coches que llegan **desde la calle** son siempre encargos cortos: entre **1 
 
 ### 5.2 Trabajos del jugador
 
-Además de los clientes que llegan, el panel **Trabajos** admite hasta **8 encargos largos** que avanzan aunque cierres el juego. Cada uno tarda hasta **24 horas** y paga hasta **2600 monedas**; hay además **1 hueco de taller** para mejorar un coche propio con descuento.
+Además de los clientes que llegan, el panel **Trabajos** admite hasta **8 encargos largos** que avanzan aunque cierres el juego. Cada uno tarda hasta **24 horas** y paga hasta **2600 monedas**; puedes mejorar varios coches propios a la vez con descuento, hasta que se agoten los elevadores o los mecánicos libres.
 
 1. Abre **Trabajos** desde el HUD.
 2. Elige un encargo compatible con tus estaciones y mecánicos.

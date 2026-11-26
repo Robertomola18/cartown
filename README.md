@@ -32,7 +32,7 @@ Capturas directas de una partida; hay más en el [`MANUAL.md`](MANUAL.md):
 
 1. **Entra en tu garaje.** Elige idioma, sigue el tutorial y revisa el HUD: dinero, experiencia, nivel, combustible, trabajos y menú principal.
 2. **Atiende clientes de la calle.** Llegan coches NPC, aparcan y piden aceite, neumáticos, frenos, puesta a punto, lavado, encerado o repintado. Son encargos cortos de **1-3 minutos** con pago bajo: monedas base del servicio más propinas de lujo/nivel, además de XP.
-3. **Usa el panel Trabajos.** Puedes aceptar hasta **8 encargos largos** (hasta **24 h** y **2600 monedas**) que siguen avanzando con el juego cerrado; además, reserva el hueco de mejora para instalar la próxima pieza con descuento.
+3. **Usa el panel Trabajos.** Puedes aceptar hasta **8 encargos largos** (hasta **24 h** y **2600 monedas**) que siguen avanzando con el juego cerrado; además, puedes iniciar mejoras de tus coches en paralelo hasta agotar elevadores y mecánicos libres, con descuento.
 4. **Compra y prepara coches.** El concesionario muestra 21 vehículos con estadísticas y color inicial. Después puedes cambiar acabado, techo bicolor, llantas, vinilos, alerones, cristales, suspensión, luces y mecánica.
 5. **Decora el garaje.** Coloca, mueve, gira y vende elevadores, lavadero, cabina de pintura, arcade, jukebox, mesas, herramientas, alfombras, baldosas y mucho más. Hay temas de suelo y pared y ampliaciones del solar.
 6. **Sal a la ciudad.** Conduce por el concesionario, taller, pista, gasolinera, lavadero, tu garaje y casas de amigos. La ciudad tiene calles, aceras, pasos de peatones, parques, mobiliario, tráfico, peatones y minimapa.
@@ -45,7 +45,7 @@ Capturas directas de una partida; hay más en el [`MANUAL.md`](MANUAL.md):
 | --- | --- |
 | **Mi garaje** | Garaje isométrico con pósters, elevadores rojos, cartel de pared, barrera de terciopelo, cruce con tráfico, coches de amigos aparcados fuera y editor de objetos. |
 | **Clientes** | Coches NPC con peticiones de aceite, neumáticos, frenos, tuning, lavado, encerado y repintado. Cada servicio consume combustible y entrega monedas, experiencia y propinas. |
-| **Trabajos** | Clientes de calle de 1-3 min con pago bajo; hasta 8 encargos del panel de hasta 24 h y 2600 monedas, progreso persistente y un hueco de taller para mejoras con descuento. |
+| **Trabajos** | Clientes de calle de 1-3 min con pago bajo; hasta 8 encargos del panel de hasta 24 h y 2600 monedas, progreso persistente y mejoras propias simultáneas limitadas por elevadores y mecánicos libres. |
 | **Comprar coches** | Concesionario con 21 vehículos, estadísticas, ocho modelos destacados y elección de color antes de la compra. |
 | **Pintar y tuning** | Acabados, techo bicolor, 13 diseños de llantas, vinilos, alerones, cristales, suspensión, underglow y mejoras mecánicas. |
 | **Editar garaje** | Compra, coloca, mueve, gira y vende elevadores, lavadero, cabina de pintura, arcade, jukebox, mesas, herramientas y baldosas. Incluye temas de suelo y pared, ampliaciones y anclaje de herramientas a mesas. |

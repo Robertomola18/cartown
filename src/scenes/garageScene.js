@@ -542,12 +542,21 @@ export class GarageScene {
       return;
     }
     const st = this.stations.find((entry) => entry.playerJob?.id === job.id);
-    if (st && !jobReady(job)) this.assignOwnJobMechanic(st);
+    if (st && !jobReady(job)) this.assignOwnJobMechanic(st, job);
   }
 
-  assignOwnJobMechanic(st) {
-    if (this.mechanics.some((m) => m.busy && m.station === st)) return;
-    this.assignMechanic(st);
+  assignOwnJobMechanic(st, job) {
+    const idx = Number.isInteger(job?.mechanicIndex) ? job.mechanicIndex : -1;
+    const preferred = idx >= 0 ? this.mechanics[idx] : null;
+    if (preferred && !preferred.busy) {
+      this.bindMechanicToStation(preferred, st);
+      if (job) job.mechanicIndex = idx;
+      return preferred;
+    }
+    if (this.mechanics.some((m) => m.busy && m.station === st)) return null;
+    const mechanic = this.assignMechanic(st);
+    if (mechanic && job) job.mechanicIndex = this.mechanics.indexOf(mechanic);
+    return mechanic;
   }
 
   isStationBusy(uid) {
@@ -590,7 +599,7 @@ export class GarageScene {
       if (job.stationUid !== st.uid) changed = true;
       job.stationUid = st.uid;
       st.playerJob = job;
-      if (!jobReady(job)) this.assignOwnJobMechanic(st);
+      if (!jobReady(job)) this.assignOwnJobMechanic(st, job);
       const obj = this.carMeshes.get(job.carId);
       if (obj) {
         st.playerCarObj = obj;
@@ -613,6 +622,7 @@ export class GarageScene {
     if (!st || st.occupant || (st.playerJob && st.playerJob.id !== job.id)) return false;
     job.stationUid = st.uid;
     st.playerJob = job;
+    if (!jobReady(job)) this.assignOwnJobMechanic(st, job);
     let obj = this.carMeshes.get(job.carId);
     if (!obj) {
       const car = this.state.getCar(job.carId);

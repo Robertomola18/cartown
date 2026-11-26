@@ -2,10 +2,10 @@
 // Customers bring work to the garage; owned cars can be sent to the workshop
 // for a discounted upgrade installation.
 
-import { SERVICES, UPGRADES, UPGRADE_MAX, upgradeCost } from './catalog.js';
+import { MAX_MECHANICS, SERVICES, UPGRADES, UPGRADE_MAX, upgradeCost } from './catalog.js';
 
 export const CUSTOMER_JOB_SLOTS = 8;
-export const OWN_JOB_SLOTS = 1;
+export const OWN_JOB_SLOTS = MAX_MECHANICS;
 export const MAX_JOBS = CUSTOMER_JOB_SLOTS + OWN_JOB_SLOTS;
 
 export const CUSTOMER_SERVICES = Object.values(SERVICES).flat();
