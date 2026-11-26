@@ -31,7 +31,7 @@ Car Town combina gestión de taller, coleccionismo de coches, conducción ligera
 | Actividad | Qué haces | Recompensa habitual |
 | --- | --- | --- |
 | Atender clientes | Recibes coches NPC que piden aceite, neumáticos, frenos, puesta a punto, lavado, encerado o repintado. | Monedas, experiencia, propinas y puntos de lujo. |
-| Trabajar en el taller | Aceptas hasta dos encargos en tiempo real y reservas el hueco de mejora. | Dinero, XP y una instalación de pieza con descuento. |
+| Atender la calle o usar Trabajos | Los coches que llegan solos duran 1-3 min y pagan poco; el panel admite hasta 8 encargos de hasta 24 h / 2600 monedas y reservas el hueco de mejora. | Dinero, XP y una instalación de pieza con descuento. |
 | Comprar y tunear | Eliges coches en el concesionario y cambias pintura, llantas, vinilos, mecánica, etc. | Coches más rápidos y mejor presentados. |
 | Decorar | Compras, mueves, giras y vendes objetos del garaje; cambias suelos, paredes y tamaño. | Garaje propio y más estaciones de servicio. |
 | Conducir | Sales a una ciudad con tráfico, peatones y minimapa. | Acceso a tiendas, pista, gasolinera, lavadero y casas de amigos. |
@@ -175,9 +175,11 @@ Los coches NPC llegan al garaje, aparcan y piden un servicio:
 
 Cada servicio consume recursos —incluido combustible— y entrega monedas, experiencia y propinas. La pantalla de trabajos muestra estados como **Servicio**, **Esperando**, **Listo: recoger** y **Marchándose**.
 
+Los coches que llegan **desde la calle** son siempre encargos cortos: entre **1 y 3 minutos**. Su pago es bajo (monedas base del servicio más propinas de lujo/nivel) y **no comparte la escala larga del panel Trabajos**.
+
 ### 5.2 Trabajos del jugador
 
-Además de los clientes que llegan, puedes aceptar hasta **dos encargos en tiempo real**:
+Además de los clientes que llegan, el panel **Trabajos** admite hasta **8 encargos largos** que avanzan aunque cierres el juego. Cada uno tarda hasta **24 horas** y paga hasta **2600 monedas**; hay además **1 hueco de taller** para mejorar un coche propio con descuento.
 
 1. Abre **Trabajos** desde el HUD.
 2. Elige un encargo compatible con tus estaciones y mecánicos.
@@ -185,7 +187,7 @@ Además de los clientes que llegan, puedes aceptar hasta **dos encargos en tiemp
 4. Espera a que termine el temporizador; el progreso se calcula por fecha (`endsAt`).
 5. Recoge la recompensa cuando aparezca **Listo: recoger**.
 
-Si todos los mecánicos están ocupados, contrata otro o espera. Si falta una estación, instálala desde el editor.
+Si todos los mecánicos están ocupados, contrata otro o espera. Si falta una estación, instálala desde el editor. No confundas estos encargos con los coches de la calle del apartado anterior: aquellos duran 1-3 minutos y pagan poco.
 
 ### 5.3 Tutorial
 
@@ -555,7 +557,7 @@ Sí. La interfaz admite móvil: arrastre en el garaje, botones de menú, pedal y
 Sí, en el mismo teclado desde la pestaña **Local** de carreras: P1 usa `Z`/`X` y P2 usa `M`/`N`.
 
 **¿Los trabajos avanzan si cierro el juego?**  
-Sí. Se calculan por fecha de finalización, por lo que el tiempo sigue pasando.
+Sí. Tanto los encargos de la calle (1-3 min) como los del panel Trabajos (hasta 24 h) se calculan por fecha de finalización, por lo que el tiempo sigue pasando.
 
 **¿Puedo perder progreso por cerrar dos pestañas?**  
 El guardado usa revisión optimista: si dos pestañas escriben a la vez, se avisa del conflicto y no se sobrescribe la partida válida.
