@@ -8,6 +8,7 @@ import {
   CUSTOMER_SERVICES,
   CUSTOMER_JOB_SLOTS,
   customerPayout,
+  customerJobDuration,
   OWN_JOB_SLOTS,
   jobRemaining,
   jobProgress,
@@ -17,10 +18,6 @@ import {
   serviceStation,
 } from '../game/jobs.js';
 import { openStaff } from './staff.js';
-
-function fmtServiceTime(minutes) {
-  return minutes >= 60 ? `${Math.round(minutes / 60)} h` : `${minutes} min`;
-}
 
 function errorText(error) {
   switch (error) {
@@ -157,7 +154,7 @@ export function openJobs(app) {
       },
       el('span', { class: 'job-emoji' }, service.icon),
       el('span', { class: 'job-service-text' }, el('b', {}, t(`svc.${service.id}`)),
-        el('small', {}, `${fmtServiceTime(service.time)} · ${fmt(customerPayout(service))} ${t('coins')} · ${service.fuel} ${t('fuel')}`))));
+        el('small', {}, `${fmtJobTime(customerJobDuration(service))} · ${fmt(customerPayout(service))} ${t('coins')} · ${service.fuel} ${t('fuel')}`))));
     }
 
     const own = el('section', { class: 'job-col' },

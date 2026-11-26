@@ -1,7 +1,7 @@
-import { el, fmt } from '../core/util.js';
+import { el, fmt, fmtJobTime } from '../core/util.js';
 import { t } from '../core/i18n.js';
 import { audio } from '../core/audio.js';
-import { CUSTOMER_SERVICES, customerPayout } from '../game/jobs.js';
+import { CUSTOMER_SERVICES, customerPayout, customerJobDuration } from '../game/jobs.js';
 import { ackTutorial } from '../core/api.js';
 import {
   applyTutorialEvent,
@@ -18,10 +18,6 @@ let layerId = 0;
 
 export function tutorialIsOpen() {
   return Boolean(active);
-}
-
-function serviceTime(minutes) {
-  return minutes >= 60 ? `${Math.round(minutes / 60)} h` : `${minutes} min`;
 }
 
 export function openTutorial(app, { force = false, replay = false } = {}) {
@@ -110,7 +106,7 @@ export function openTutorial(app, { force = false, replay = false } = {}) {
     list.innerHTML = '';
     if (def.list) {
       for (const service of CUSTOMER_SERVICES) {
-        list.append(el('li', {}, `${t(`svc.${service.id}`)} — ${serviceTime(service.time)} · ${service.fuel} ${t('fuel')} · ${fmt(customerPayout(service))} ${t('coins')}`));
+        list.append(el('li', {}, `${t(`svc.${service.id}`)} — ${fmtJobTime(customerJobDuration(service))} · ${service.fuel} ${t('fuel')} · ${fmt(customerPayout(service))} ${t('coins')}`));
       }
     }
     fallback.textContent = t('tutorialFallback');
