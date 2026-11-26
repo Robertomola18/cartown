@@ -15,7 +15,7 @@ import { icon, SERVICE_ICON } from '../ui/icons.js';
 
 const PATIENCE = 90;
 const AUTO_COLLECT = Infinity;
-const STREET_TIME_MULT = 2;
+const STREET_MAX_MINUTES = 3;
 
 export class CustomerManager {
   constructor(scene) {
@@ -114,7 +114,7 @@ export class CustomerManager {
     obj.rotation.y = headingOf(0, 1);
     S.root.add(obj);
     obj.userData.pick = { type: 'customer' };
-    const duration = Math.max(1, svc.time * STREET_TIME_MULT);
+    const duration = Math.min(STREET_MAX_MINUTES, Math.max(1, svc.time)) * 60;
     const c = { obj, station, svc, duration, cfg, phase: 'arriving', timer: 0, mover: null, label: null, progress: 0 };
     obj.userData.customer = c;
     station.occupant = c;
@@ -414,7 +414,7 @@ export class CustomerManager {
   startService(c) {
     const st = this.state;
     if (!c.job) {
-      const result = st.startCustomerJob(c.svc.id, { stationUid: c.station.uid, cfg: c.cfg });
+      const result = st.startCustomerJob(c.svc.id, { stationUid: c.station.uid, cfg: c.cfg, origin: 'street' });
       if (!result.ok) {
         audio.error();
         const msg = result.error === 'fuel' ? t('notEnoughFuel') : result.error === 'slots' ? t('errNoSlots') : result.error === 'station' ? t('errStation') : result.error === 'stationBusy' ? t('stationBusy') : t('socialError');

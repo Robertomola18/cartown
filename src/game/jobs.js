@@ -14,6 +14,8 @@ const MAX_SERVICE_COINS = Math.max(1, ...CUSTOMER_SERVICES.map((service) => Numb
 export const JOB_MAX_PAYOUT = 2600;
 export const JOB_MAX_DURATION_MS = 24 * 60 * 60 * 1000;
 const JOB_STEP_MS = 15 * 60 * 1000;
+const STREET_JOB_MIN_MS = 60 * 1000;
+const STREET_JOB_MAX_MS = 3 * 60 * 1000;
 
 export function serviceStation(serviceId) {
   for (const [kind, list] of Object.entries(SERVICES)) {
@@ -36,13 +38,21 @@ export function customerJobDuration(service) {
   return payoutDuration(customerPayout(service));
 }
 
+export function streetJobDuration(service) {
+  const minutes = Math.max(1, Math.min(3, Number(service.time) || 1));
+  return Math.max(STREET_JOB_MIN_MS, Math.min(STREET_JOB_MAX_MS, minutes * 60 * 1000));
+}
+
 export function customerJob(id, service, now = Date.now(), extra = {}) {
-  const coins = customerPayout(service);
-  const duration = payoutDuration(coins);
+  const street = extra.origin === 'street';
+  const coins = street ? Math.round(Number(extra.coins ?? service.coins) || 0) : customerPayout(service);
+  const xp = street ? Math.round(Number(extra.xp ?? service.xp) || 0) : Math.round(service.xp * 2);
+  const duration = street ? streetJobDuration(service) : payoutDuration(coins);
   return {
     id,
     kind: 'customer',
     ...extra,
+    origin: street ? 'street' : 'panel',
     serviceId: service.id,
     name: service.name,
     icon: service.icon,
@@ -51,7 +61,7 @@ export function customerJob(id, service, now = Date.now(), extra = {}) {
     endsAt: now + duration,
     fuel: service.fuel,
     coins,
-    xp: Math.round(service.xp * 2),
+    xp,
     claimed: false,
   };
 }

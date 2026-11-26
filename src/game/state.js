@@ -518,6 +518,15 @@ export class GameState extends Emitter {
     return this.activeJobs().some((job) => job.stationUid === stationUid);
   }
 
+  streetReward(service) {
+    const lux = this.luxuryTier();
+    const level = Number(this.level) || 1;
+    return {
+      coins: Math.round((Number(service.coins) || 0) * (1 + (Number(lux.tipBonus) || 0)) * (1 + (level - 1) * 0.03)),
+      xp: Number(service.xp) || 0,
+    };
+  }
+
   startCustomerJob(serviceId = null, opts = {}) {
     if (this.jobsUsed('customer') >= CUSTOMER_JOB_SLOTS) return { ok: false, error: 'slots' };
     const service = serviceId
@@ -528,11 +537,16 @@ export class GameState extends Emitter {
     if (station && !this.hasStation(station)) return { ok: false, error: 'station' };
     if (this.stationReserved(opts.stationUid)) return { ok: false, error: 'stationBusy' };
     if (this.data.fuel < service.fuel) return { ok: false, error: 'fuel' };
+    const street = opts.origin === 'street';
+    const reward = street ? this.streetReward(service) : null;
     this.useFuel(service.fuel);
     const job = customerJob(uid('job'), service, Date.now(), {
       stationUid: opts.stationUid || null,
       mechanicIndex: Number.isInteger(opts.mechanicIndex) ? opts.mechanicIndex : null,
       cfg: opts.cfg || null,
+      origin: street ? 'street' : 'panel',
+      coins: street ? reward.coins : undefined,
+      xp: street ? reward.xp : undefined,
     });
     this.data.jobs.push(job);
     this.emit('jobs');
