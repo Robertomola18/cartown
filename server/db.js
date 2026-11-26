@@ -6,6 +6,7 @@ import { generateBotGarage } from './botGarage.js';
 
 let db = null;
 let snapshotTimer = null;
+const usableCache = new Map();
 
 function ensureDirs() {
   for (const dir of [config.dataDir, config.ramDir, config.emergencyDir]) {
@@ -20,7 +21,8 @@ function snapshotFiles(dir) {
       .filter((name) => /^cartown-\d{8}-\d{6}(?:-\d{3})?-\d+\.db$/.test(name))
       .map((name) => {
         const file = path.join(dir, name);
-        return { file, mtime: fs.statSync(file).mtimeMs };
+        const stat = fs.statSync(file);
+        return { file, mtime: stat.mtimeMs, size: stat.size };
       })
       .sort((a, b) => b.mtime - a.mtime);
   } catch {
@@ -29,14 +31,30 @@ function snapshotFiles(dir) {
 }
 
 function isUsable(file) {
+  let mtime = 0;
+  let size = 0;
+  try {
+    const stat = fs.statSync(file);
+    mtime = stat.mtimeMs;
+    size = stat.size;
+  } catch {
+    return false;
+  }
+  const key = `${file}:${mtime}:${size}`;
+  const hit = usableCache.get(key);
+  if (hit !== undefined) return hit;
+  let ok = false;
   try {
     const probe = new DatabaseSync(file, { readOnly: true });
     const row = probe.prepare('PRAGMA quick_check').get();
     probe.close();
-    return String(row?.quick_check || '').toLowerCase() === 'ok';
+    ok = String(row?.quick_check || '').toLowerCase() === 'ok';
   } catch {
-    return false;
+    ok = false;
   }
+  usableCache.set(key, ok);
+  if (usableCache.size > 200) usableCache.delete(usableCache.keys().next().value);
+  return ok;
 }
 
 function restoreIfNeeded() {
@@ -52,7 +70,8 @@ function restoreIfNeeded() {
   }
 
   const candidates = [...snapshotFiles(config.emergencyDir), ...snapshotFiles(config.nasDir)]
-    .sort((a, b) => b.mtime - a.mtime);
+    .sort((a, b) => b.mtime - a.mtime)
+    .slice(0, 8);
   for (const candidate of candidates) {
     try {
       fs.rmSync(`${config.dbPath}-wal`, { force: true });
@@ -684,6 +703,10 @@ export function deleteUserSessions(userId) {
 
 export function deleteUser(userId) {
   getDb().prepare('DELETE FROM users WHERE id = ?').run(Number(userId));
+}
+
+export function countUsers() {
+  return Number(getDb().prepare('SELECT COUNT(*) AS n FROM users').get()?.n || 0);
 }
 
 export function listUsers() {

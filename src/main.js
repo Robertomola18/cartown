@@ -98,12 +98,16 @@ async function boot() {
   if (!bootData) return;
   const engine = new Engine(document.getElementById('app'));
   registerCustomCars(bootData.customCars);
-  const modelIds = allModelIds();
-  // Build every car body once up front so the garage never hitches.
-  for (let i = 0; i < modelIds.length; i++) {
-    warmTemplates([modelIds[i]], 'low');
-    bar.style.width = `${Math.round(((i + 1) / (modelIds.length + 2)) * 100)}%`;
-    text.textContent = `Building cars… ${i + 1}/${modelIds.length}`;
+  const knownModels = new Set(allModelIds());
+  const carSources = [bootData.save.state.cars, bootData.save.state.garage?.cars];
+  const warmIds = [...new Set(carSources.flatMap((cars) => (Array.isArray(cars) ? cars : []).map((car) => car?.cfg?.model)))].filter((id) => knownModels.has(id));
+  if (!warmIds.length) warmIds.push(...knownModels);
+  // Build only the cars needed by this save so the garage never hitches.
+  for (let i = 0; i < warmIds.length; i += 4) {
+    warmTemplates(warmIds.slice(i, i + 4), 'low');
+    const done = Math.min(i + 4, warmIds.length);
+    bar.style.width = `${Math.round((done / (warmIds.length + 2)) * 100)}%`;
+    text.textContent = `Building cars… ${done}/${warmIds.length}`;
     await frame();
   }
   text.textContent = 'Opening the garage…';

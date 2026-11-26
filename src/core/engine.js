@@ -9,7 +9,7 @@ export class Engine {
     const mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     this.mobile = mobile;
     this.maxPixelRatio = mobile ? 1.25 : 2;
-    const renderer = new THREE.WebGLRenderer({ antialias: !mobile, preserveDrawingBuffer: true, powerPreference: mobile ? 'default' : 'high-performance' });
+    const renderer = new THREE.WebGLRenderer({ antialias: !mobile, powerPreference: mobile ? 'default' : 'high-performance' });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, this.maxPixelRatio));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.NeutralToneMapping;

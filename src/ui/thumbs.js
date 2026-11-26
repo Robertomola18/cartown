@@ -105,13 +105,32 @@ export function carThumb(cfg, imgEl) {
   }, (url) => { if (url) imgEl.src = url; });
 }
 
+function disposeObject(root) {
+  root.traverse((node) => {
+    const car = node.userData?.car;
+    if (car) {
+      car.dispose();
+      return;
+    }
+    for (let parent = node.parent; parent; parent = parent.parent) {
+      if (parent.userData?.car) return;
+    }
+    node.geometry?.dispose();
+    const material = node.material;
+    if (Array.isArray(material)) material.forEach((m) => m?.dispose());
+    else material?.dispose();
+  });
+}
+
 export function itemThumb(type, imgEl) {
   request(`item:${type}`, () => {
     const g = buildItem(type);
     const box = new THREE.Box3().setFromObject(g);
     const size = box.getSize(new THREE.Vector3());
     const r = Math.max(size.x, size.y * 1.3, size.z);
-    return render(g, { dist: 1.5 + r * 2.1, height: 0.8 + r * 0.9, ty: size.y * 0.45, yaw: 0.6 });
+    const url = render(g, { dist: 1.5 + r * 2.1, height: 0.8 + r * 0.9, ty: size.y * 0.45, yaw: 0.6 });
+    disposeObject(g);
+    return url;
   }, (url) => { if (url) imgEl.src = url; });
 }
 
@@ -158,6 +177,8 @@ export function garageThumb(garage = {}, imgEl) {
     const wrap = new THREE.Group();
     g.position.set(-N / 2, 0, -N / 2);
     wrap.add(g);
-    return render(wrap, { dist: N * 0.62, height: N * 0.42, ty: 1.1, yaw: 0.65 });
+    const url = render(wrap, { dist: N * 0.62, height: N * 0.42, ty: 1.1, yaw: 0.65 });
+    disposeObject(wrap);
+    return url;
   }, (url) => { if (url) imgEl.src = url; });
 }

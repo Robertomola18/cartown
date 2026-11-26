@@ -11,6 +11,7 @@ import { config, withBase } from './config.js';
 import {
   clearUserForceTutorial,
   closeDb,
+  countUsers,
   createUser,
   dbPing,
   getBot,
@@ -586,7 +587,7 @@ async function handle(req, res) {
       ok: healthy,
       rooms: rooms.size,
       players: wss.clients.size,
-      users: listUsers().length,
+      users: healthy ? countUsers() : 0,
       basePath: config.basePath,
     });
     return;
@@ -975,19 +976,23 @@ wss.on('connection', (ws, req) => {
       case 'progress': {
         const room = client.room;
         if (!room || room.state !== 'racing') break;
+        client.pendingProgress = {
+          type: 'progress',
+          id: client.id,
+          dist: Number(msg.dist) || 0,
+          v: Number(msg.v) || 0,
+          rpm: Number(msg.rpm) || 0,
+          gear: Number(msg.gear) || 1,
+          nitro: Boolean(msg.nitro),
+          launched: Boolean(msg.launched),
+        };
+        const now = Date.now();
+        if (now - (client.lastProgressAt || 0) < 33) break;
+        client.lastProgressAt = now;
+        const progress = client.pendingProgress;
+        client.pendingProgress = null;
         for (const player of room.players) {
-          if (player !== client) {
-            wsSend(player.ws, {
-              type: 'progress',
-              id: client.id,
-              dist: Number(msg.dist) || 0,
-              v: Number(msg.v) || 0,
-              rpm: Number(msg.rpm) || 0,
-              gear: Number(msg.gear) || 1,
-              nitro: Boolean(msg.nitro),
-              launched: Boolean(msg.launched),
-            });
-          }
+          if (player !== client) wsSend(player.ws, progress);
         }
         break;
       }

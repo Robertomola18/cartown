@@ -223,8 +223,36 @@ export function openJobs(app) {
 
   refreshAll();
   timer = setInterval(() => {
-    renderSummary();
-    renderActive();
+    const summaryKey = [
+      st.jobsUsed('customer'),
+      st.jobsUsed('own'),
+      st.mechanics,
+      app.garage?.stations?.filter((station) => station.kind === 'lift' && !station.occupant && !station.playerJob).length ?? 0,
+      st.data.fuel,
+    ].join('|');
+    if (activeWrap.dataset.summary !== summaryKey) {
+      renderSummary();
+      activeWrap.dataset.summary = summaryKey;
+    }
+    const jobs = st.activeJobs();
+    const activeKey = jobs.map((job) => `${job.id}:${jobReady(job) ? 1 : 0}`).join('|');
+    if (activeWrap.dataset.jobs !== activeKey) {
+      renderActive();
+      activeWrap.dataset.jobs = activeKey;
+    } else {
+      const byId = new Map(jobs.map((job) => [job.id, job]));
+      for (const card of activeWrap.querySelectorAll('.job-card')) {
+        const job = byId.get(card.dataset.jobId);
+        if (!job) continue;
+        const ready = jobReady(job);
+        const time = card.querySelector('.job-time');
+        if (time) time.textContent = ready ? t('jobsReady') : fmtJobTime(jobRemaining(job));
+        const bar = card.querySelector('.job-track i');
+        if (bar) bar.style.width = `${(jobProgress(job) * 100).toFixed(1)}%`;
+        const rush = card.querySelector('.job-rush');
+        if (rush) rush.textContent = t('jobsRush', { n: fmt(jobRushCost(job)) });
+      }
+    }
     const next = actionsSignature();
     if (next !== actionsKey) {
       actionsKey = next;
