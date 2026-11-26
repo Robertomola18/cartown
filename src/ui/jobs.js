@@ -43,6 +43,7 @@ export function openJobs(app) {
   body.append(summary, activeWrap, actions);
 
   let timer = null;
+  let actionsKey = '';
   const readySeen = new Set();
   const m = modal({
     title: t('jobsTitle'),
@@ -197,16 +198,33 @@ export function openJobs(app) {
     actions.append(customer, own);
   };
 
+  const actionsSignature = () => [
+    app.garage?.freeLift()?.uid || '',
+    app.garage?.freeMechanicCount?.() ?? st.mechanics,
+    st.jobsUsed('customer') >= CUSTOMER_JOB_SLOTS ? 1 : 0,
+    st.jobsUsed('own'),
+    st.data.fuel,
+    st.tutorialJobPending() ? 1 : 0,
+    ['lift', 'wash', 'paint'].map((kind) => `${st.hasStation(kind) ? 1 : 0}:${app.garage?.freeStation?.(kind)?.uid || ''}`).join(','),
+    st.cars.map((car) => `${car.id}:${st.carJob(car.id)?.id || ''}:${Object.values(car.cfg?.upgrades || {}).join('.')}`).join('|'),
+  ].join('|');
+
   const refreshAll = () => {
     renderSummary();
     renderActive();
     renderActions();
+    actionsKey = actionsSignature();
   };
 
   refreshAll();
   timer = setInterval(() => {
     renderSummary();
     renderActive();
+    const next = actionsSignature();
+    if (next !== actionsKey) {
+      actionsKey = next;
+      renderActions();
+    }
   }, 1000);
   return m;
 }
