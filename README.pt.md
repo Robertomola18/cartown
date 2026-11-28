@@ -176,3 +176,22 @@ Para mais detalhes do jogo, consulte [`JUEGO.md`](JUEGO.md) e, em espanhol, [`PR
 ## Aviso legal
 
 Este projeto é fã, não comercial e não está afiliado à Cie Games, Glu nem ao Car Town original. Os nomes de marcas e modelos são usados apenas para identificar os carros recriados. Todos os modelos, texturas e sons deste repositório são gerados por código.
+
+## Licença e autor
+
+Licença: todos os direitos reservados. Este projeto é para uso pessoal e não comercial; não é permitida a redistribuição nem o uso comercial sem autorização.
+
+Autor: indicado na assinatura no final deste README.
+
+## Assinatura
+
+<p align="center">
+  <img src="docs/firma.png" alt="R. Silva" width="220"><br>
+  Created by <b>Rober Da Silva (DjGuesh)</b> · Rsilva Corp Limited
+</p>
+
+<h2 align="center">
+  <img src="docs/bandera-espana.png" alt="Spain" height="48">&nbsp;&nbsp;
+  100% Spanish product&nbsp;&nbsp;
+  <img src="docs/bandera-bierzo.png" alt="El Bierzo" height="48">
+</h2>
