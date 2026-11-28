@@ -185,8 +185,13 @@ Autor: indicado en la firma del README.
 
 ## Firma
 
-![RSILVA](docs/firma.png)
+<p align="center">
+  <img src="docs/firma.png" alt="R. Silva" width="220"><br>
+  Created by <b>Rober Da Silva (DjGuesh)</b> · Rsilva Corp Limited
+</p>
 
-🇪🇸 100 % en español · [🇬🇧 English](README.en.md) · [🇧🇷 Português (Brasil)](README.pt.md)
-
-Creado por Rober Da Silva (DjGuesh) Rsilva Corp Limited · Registrado en [SafeCreative](https://www.safecreative.org/work/2608136719971)
+<h2 align="center">
+  <img src="docs/bandera-espana.png" alt="Spain" height="48">&nbsp;&nbsp;
+  100% Spanish product&nbsp;&nbsp;
+  <img src="docs/bandera-bierzo.png" alt="El Bierzo" height="48">
+</h2>
