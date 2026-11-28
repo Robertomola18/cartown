@@ -1,6 +1,6 @@
 # Car Town — remake 3D
 
-🇪🇸 **100 % en español** · [🇬🇧 English](README.en.md) · [🇧🇷 Português (Brasil)](README.pt.md)
+[English](README.en.md) · [Português (Brasil)](README.pt.md) · **Español**
 
 Car Town es un remake 3D para navegador del clásico juego social de garaje, creado con [three.js](https://threejs.org). No es un proyecto oficial ni comercial: es una reconstrucción hecha a mano con modelos, texturas y sonidos generados por código.
 
@@ -181,4 +181,12 @@ Este proyecto es fan-made, no comercial y no está afiliado a Cie Games, Glu ni 
 
 Licencia: todos los derechos reservados. Este proyecto es de uso personal y no comercial; no se permite su redistribución ni su uso comercial sin autorización.
 
-Autor: anónimo, sin nombre público en este repositorio.
+Autor: indicado en la firma del README.
+
+## Firma
+
+![RSILVA](docs/firma.png)
+
+🇪🇸 100 % en español · [🇬🇧 English](README.en.md) · [🇧🇷 Português (Brasil)](README.pt.md)
+
+Creado por Rober Da Silva (DjGuesh) Rsilva Corp Limited · Registrado en [SafeCreative](https://www.safecreative.org/work/2608136719971)
