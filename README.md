@@ -176,3 +176,9 @@ Para más detalles del juego consulta [`JUEGO.md`](JUEGO.md) y, en español, [`P
 ## Aviso legal
 
 Este proyecto es fan-made, no comercial y no está afiliado a Cie Games, Glu ni al Car Town original. Los nombres de marcas y modelos se usan únicamente para identificar los coches recreados. Todos los modelos, texturas y sonidos de este repositorio se generan por código.
+
+## Licencia y autor
+
+Licencia: todos los derechos reservados. Este proyecto es de uso personal y no comercial; no se permite su redistribución ni su uso comercial sin autorización.
+
+Autor: anónimo, sin nombre público en este repositorio.
